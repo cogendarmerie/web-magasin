@@ -1,0 +1,7 @@
+routes:
+  home:
+    path: /
+    controller: HomeController@index
+  products:
+    path: /products
+    controller: ProductsController@index

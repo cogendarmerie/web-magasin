@@ -1,0 +1,21 @@
+###> Gestionnaires
+vendor
+###<
+
+###> Docker
+.docker/mysql/data
+###<
+
+###> Environement
+.env.local
+.env.dev
+###<
+
+###> IDE
+.code
+.idea
+###< 
+
+###> OS
+.DS_Store
+###<
