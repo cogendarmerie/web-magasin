@@ -43,8 +43,9 @@ class App
      */
     private function getController(string $uri): void
     {
-        foreach ($this->routes as $route) {
-            if ($route['path'] === $uri) {
+        foreach ($this->routes as $routeName => $route) {
+            $pattern = preg_replace('/\{(\w+)\}/', '(?P<\1>[^/]+)', $route['path']);
+            if (preg_match("#^$pattern$#", $uri, $matches)) {
                 list($controller, $method) = explode('@', $route['controller']);
                 $controllerClass = "Controllers\\" . $controller;
 
@@ -57,7 +58,15 @@ class App
                     throw new Exception("La méthode $method n'a pas été trouvée dans le contrôleur $controllerClass.");
                 }
 
-                $controllerInstance->$method();
+                // Extraire les paramètres de l'URI
+                $params = [];
+                foreach ($matches as $key => $value) {
+                    if (!is_numeric($key)) {
+                        $params[$key] = $value;
+                    }
+                }
+
+                $controllerInstance->$method(...$params);
                 return;
             }
         }

@@ -5,7 +5,10 @@ nav#left-nav
   bottom: 0
   width: 15rem
   background-color: $color-nav-background
-  display: none
+  z-index: 999
+
+  &:not(.open)
+    display: none
 
   .nav-wrapper
     padding: 2rem 2rem
@@ -46,13 +49,35 @@ nav#top-nav
   right: 0
   z-index: 1000
 
+  #nav-toggle
+    transition: all .25s ease
+    height: 4rem
+    width: 4rem
+    display: flex
+    flex-direction: row
+    justify-content: center
+    align-items: center
+    color: white
+    cursor: pointer
+
+    svg path
+      stroke: white
+
+    &:hover
+      background-color: rgba(white, .1)
+
   .nav-wrapper
     height: 4rem
     background-color: $color-blue
     display: flex
     flex-direction: row
     justify-content: space-between
-    padding: 0 2rem
+    padding: 0 2rem 0 0
+
+    > div:first-child
+      display: flex
+      flex-direction: row
+      gap: 2rem
 
   .logo-wrapper
     display: flex

@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% from 'macros/breadcrumb.html.twig' import breadcrumb %}
+
+{% block title %}Clients{% endblock %}
+
+{% block body %}
+    <main>
+        <header class="page-wrapper">
+            <div>
+                <h1>Clients</h1>
+                {{ breadcrumb('', 'Clients') }}
+            </div>
+        </header>
+    </main>
+{% endblock %}
