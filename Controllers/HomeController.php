@@ -6,6 +6,8 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $this->render('home/index');
+        $this->twig->display('home/index.html.twig', [
+            "title" => "Home",
+        ]);
     }
 }

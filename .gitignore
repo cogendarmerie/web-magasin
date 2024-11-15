@@ -19,3 +19,11 @@ vendor
 ###> OS
 .DS_Store
 ###<
+
+###> Fichiers compilés
+public/assets/css/main.css
+###<
+
+###> Fichiers log
+.docker/nginx/log
+###<

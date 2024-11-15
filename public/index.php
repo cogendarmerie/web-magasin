@@ -3,6 +3,8 @@
 require_once '../autoload.php';
 require_once '../vendor/autoload.php';
 
+define('ROOT', dirname(__DIR__));
+
 try
 {
     $app = new App();

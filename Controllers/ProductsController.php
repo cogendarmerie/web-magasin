@@ -5,6 +5,6 @@ class ProductsController extends Controller
 {
     public function index(): void
     {
-        $this->render('products/index');
+        $this->twig->display('products/index.html.twig');
     }
 }

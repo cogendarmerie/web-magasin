@@ -9,6 +9,7 @@ Par Corentin SAMARD--EYMONERIE
 Vous devez disposez à minimas sur votre machine :
 - Docker
 - Un naviguateur internet
+- Make
 
 ## Installation
 
@@ -18,6 +19,14 @@ Construire les containers docker avec la commande :
 
 ```
 docker compose up --build
+```
+
+### Makefile
+
+Pour compiler les fichiers CSS, il est nécessaire de faire la commande :
+
+```
+make dev
 ```
 
 ## Accès

@@ -1,5 +1,6 @@
 {
     "require": {
-        "mustangostang/spyc": "^0.6.3"
+        "mustangostang/spyc": "^0.6.3",
+        "twig/twig": "^3.14"
     }
 }
