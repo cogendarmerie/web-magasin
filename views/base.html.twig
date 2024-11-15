@@ -4,11 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Bienvenue{% endblock %} - Web Magasin</title>
+    <link rel="stylesheet" href="/assets/css/main.css">
 
     {% block stylesheets %}{% endblock %}
     {% block javascripts %}{% endblock %}
 </head>
 <body>
+    <nav id="top-nav">
+        <div class="nav-wrapper">
+            <div>
+                <div class="logo-wrapper">
+                    <a href="/">
+                        <img src="https://res.cloudinary.com/seventeen-informatique/image/upload/v1704554040/identity/xvpr06elytiztfwir6ix.svg" alt="Logo SEVENTEEN INFORMATIQUE">
+                    </a>
+                </div>
+            </div>
+            <div>
+                <div class="profile-wrapper">
+                    <img src="https://images.pexels.com/photos/8867242/pexels-photo-8867242.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Photo de profil">
+                </div>
+            </div>
+        </div>
+    </nav>
+    <nav id="left-nav">
+        <div class="nav-wrapper">
+            <div class="links-wrapper">
+                <div>
+                    <a href="/">Accueil</a>
+                </div>
+                <div>
+                    <div>
+                        <p>Clients</p>
+                    </div>
+                    <ul>
+                        <li>
+                            <a href="#">Lister</a>
+                        </li>
+                        <li>
+                            <a href="#">Nouveau</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <div>
+                        <p>Produits</p>
+                    </div>
+                    <ul>
+                        <li>
+                            <a href="/products">Lister</a>
+                        </li>
+                        <li>
+                            <a href="#">Nouveau</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
     {% block body %}{% endblock %}
 </body>
 </html>

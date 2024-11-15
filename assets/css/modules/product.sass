@@ -1,0 +1,27 @@
+.product
+  > div:first-child
+    h3, p
+      margin: 0
+
+    h3
+      font-size: 24px
+      text-transform: capitalize
+
+    p
+      font-size: 16px
+      color: rgba($color-blue, .8)
+
+.products-list
+  display: grid
+  grid-template-columns: repeat(4, 1fr)
+  column-gap: 2rem
+  row-gap: 4rem
+
+  @media screen and (max-width: 1450px)
+    grid-template-columns: repeat(3, 1fr)
+
+  @media screen and (max-width: 756px)
+    grid-template-columns: repeat(2, 1fr)
+
+  @media screen and (max-width: 464px)
+    grid-template-columns: repeat(1, 1fr)

@@ -1,6 +1,7 @@
 {
     "require": {
         "mustangostang/spyc": "^0.6.3",
-        "twig/twig": "^3.14"
+        "twig/twig": "^3.14",
+        "ramsey/uuid": "^4.7"
     }
 }

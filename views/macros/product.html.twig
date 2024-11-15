@@ -1,0 +1,16 @@
+{% macro product_card(name, price, category, quantity, dlc) %}
+    <div class="product">
+        <div>
+            <h3>{{ name }}</h3>
+            <p>{{ price }} €</p>
+        </div>
+        <div>
+            <p>{{ category }}</p>
+            <p>{{ quantity }} en stock</p>
+            <p>DLC {{ dlc | date('d/m/Y') }}</p>
+        </div>
+        <div>
+            <a href="#" class="button button-primary">Détails</a>
+        </div>
+    </div>
+{% endmacro %}

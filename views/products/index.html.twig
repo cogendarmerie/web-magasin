@@ -1,3 +1,22 @@
 {% extends 'base.html.twig' %}
+{% from 'macros/product.html.twig' import product_card %}
 
 {% block title %}Produits{% endblock %}
+
+{% block body %}
+<main>
+    <header class="page-wrapper">
+        <div>
+            <h1>Produits</h1>
+            <p>Web Magasin > Produits</p>
+        </div>
+    </header>
+    <section class="page-wrapper">
+        <div class="products-list">
+            {% for product in products %}
+                {{ product_card(product.name, product.price, product.category, product.quantity, product.dataExpiration) }}
+            {% endfor %}
+        </div>
+    </section>
+</main>
+{% endblock %}
