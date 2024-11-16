@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 {% from 'macros/breadcrumb.html.twig' import breadcrumb %}
+{% from 'macros/modals.html.twig' import modal_deletion %}
 
 {% block title %}Client{% endblock %}
 
@@ -27,5 +28,18 @@
                 <p>Ce client n'a encore réalisée aucun achat.</p>
             </div>
         </section>
+        <section class="page-wrapper">
+            <div>
+                <h2>Danger</h2>
+            </div>
+            <div>
+                <button class="button button-destructive" id="delete-user">Supprimer {{ customer.name }}</button>
+                {{ modal_deletion('modal_deletion', customer.name, '/customer/delete?customerId=' ~ customer.id) }}
+            </div>
+        </section>
     </main>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="/assets/js/customer.js"></script>
 {% endblock %}

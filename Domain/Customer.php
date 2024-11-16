@@ -49,10 +49,6 @@ class Customer
 
     public function toArray(): array
     {
-        return [
-            'id' => $this->getId(),
-            'email' => $this->getEmail(),
-            'name' => $this->getName()
-        ];
+        return get_object_vars($this);
     }
 }

@@ -8,9 +8,10 @@ form
 .form-control-wrapper
   display: block
 
-  input, label
+  input, label, select
     display: block
     font-family: v.$font-default
+    background-color: white
 
   label
     font-size: 16px
@@ -18,12 +19,17 @@ form
     margin-bottom: .5rem
 
   input
+    width: calc(100% - 4rem)
+
+  select
+    width: 100%
+
+  input, select
     padding: 1rem 2rem
     margin: 0
     outline: none
     transition: all .25s ease
     border: 1px solid v.$color-blue
-    width: 100%
 
     &:focus
       border-color: v.$color-orange

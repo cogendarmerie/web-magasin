@@ -6,9 +6,9 @@ use Domain\Product;
 
 class Electromenager extends Product
 {
-    public function __construct(?string $id, float|int $price, string $name, string $category, int $quantity, protected \DateTime $guarantee)
+    public function __construct(float|int $price, string $name, int $quantity, protected \DateTime $guarantee, ?string $id = null)
     {
-        parent::__construct(id: $id, price: $price, name: $name, category: $category, quantity: $quantity);
+        parent::__construct(id: $id, price: $price, name: $name, category: "Electromenager", quantity: $quantity);
     }
 
     /**
@@ -18,5 +18,10 @@ class Electromenager extends Product
     public function getGuarantee(): \DateTime
     {
         return $this->guarantee;
+    }
+
+    private function checkGuarantee(): bool
+    {
+        return new \DateTime($this->guarantee) > new \DateTime();
     }
 }

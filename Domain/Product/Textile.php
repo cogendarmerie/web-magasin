@@ -6,13 +6,13 @@ use Domain\Product;
 
 class Textile extends Product
 {
-    public function __construct(?string $id, float|int $price, string $name, int $quantity, protected string $taille)
+    public function __construct(float|int $price, string $name, int $quantity, protected string $size, ?string $id = null)
     {
-        parent::__construct(id: $id, price: $price, name: $name, category: "textile", quantity: $quantity);
+        parent::__construct(id: $id, price: $price, name: $name, category: "Textile", quantity: $quantity);
     }
 
-    public function getTaille(): string
+    public function getSize(): string
     {
-        return $this->taille;
+        return $this->size;
     }
 }

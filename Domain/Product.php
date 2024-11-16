@@ -68,4 +68,9 @@ abstract class Product
         $this->quantity -= $quantity;
         return $this;
     }
+
+    public function toArray(): array
+    {
+        return get_object_vars($this);
+    }
 }

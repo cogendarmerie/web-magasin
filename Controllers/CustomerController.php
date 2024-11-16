@@ -9,14 +9,21 @@ use PDOException;
 
 class CustomerController extends Controller
 {
+    protected CustomerOrm $orm;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->orm = new CustomerOrm();
+    }
+
     /**
      * Lister les clients
      * @return void
      */
     public function index()
     {
-        $customerOrm = new CustomerOrm();
-        $customers = $customerOrm->getAll();
+        $customers = $this->orm->getAll();
 
         $this->display('customer/index.html.twig', [
             'customers' => $customers
@@ -37,8 +44,7 @@ class CustomerController extends Controller
                 );
 
                 // Sauvegarder le client dans la base de donnée
-                $customerOrm = new CustomerOrm();
-                $resultCreation = $customerOrm->insert($customer);
+                $resultCreation = $this->orm->insert($customer);
 
                 if($resultCreation)
                 {
@@ -60,14 +66,40 @@ class CustomerController extends Controller
     }
 
     /**
+     * Supprimer un utilisateur
+     * @return void
+     */
+    public function delete(): void
+    {
+        if(!isset($_GET['customerId']))
+        {
+            echo "Vous devez fournir un id client";
+            exit();
+        }
+
+        $customerId = $_GET['customerId'];
+
+        // Supprimer le client
+        $deletion = $this->orm->delete($customerId);
+
+        if($deletion)
+        {
+            $this->redirect('/customers');
+        }
+        else
+        {
+            echo "Une erreur est survenue lors de la suppression.";
+        }
+    }
+
+    /**
      * Page détaillant une fiche client
      * @param $customerId
      * @return void
      */
     public function details($customerId)
     {
-        $customerOrm = new CustomerOrm();
-        $customer = $customerOrm->getById($customerId);
+        $customer = $this->orm->getById($customerId);
 
         $this->display('customer/details.html.twig', [
             'customer' => $customer

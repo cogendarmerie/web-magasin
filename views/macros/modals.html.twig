@@ -1,0 +1,19 @@
+{% macro modal_deletion(id, object_name, url_destination) %}
+    <div class="modal-wrapper" id="{{ id }}">
+        <div>
+            <div>
+                <div>
+                    <h2>Confirmer la suppression ?</h2>
+                </div>
+                <div>
+                    <p>Êtes-vous sûr de vouloir supprimer <b>{{ object_name }}</b> ?</p>
+                    <p class="avertissement">Attention,<br>Cette action est irréversible, une fois cette objet ne pourras plus être récupérer.</p>
+                </div>
+            </div>
+            <div>
+                <button data-action="confirm" data-href="{{ url_destination }}" class="button button-destructive">Confirmer</button>
+                <button data-action="cancel" class="button button-ghost">Annuler</button>
+            </div>
+        </div>
+    </div>
+{% endmacro %}

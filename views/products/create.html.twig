@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+{% from 'macros/breadcrumb.html.twig' import breadcrumb %}
+{% from 'macros/form.html.twig' import input, select, submit %}
+
+{% block title %}Créer un produit{% endblock %}
+
+{% block body %}
+    <main>
+        <header class="page-wrapper">
+            <div>
+                <h1>Créer un produit</h1>
+                {{ breadcrumb('Produits', 'Nouveau') }}
+            </div>
+        </header>
+        <section class="page-wrapper">
+            <div>
+                <form action="" method="POST">
+                    {{ input('name', 'name', 'Nom', 'Ordinateur DELL Optiplex 3060 Tiny') }}
+                    {{ input('price', 'price', 'Prix', '599.99') }}
+                    {{ input('quantity', 'quantity', 'Quantite', '4') }}
+                    {{ select('category', 'category', 'Catégorie', categories) }}
+                    <div id="group-Electromenager" class="group" style="display: none;">
+                        {{ input('guarantee', 'guarantee', "Garantie", '01/05/2024', 'date') }}
+                    </div>
+                    <div id="group-Textile" class="group" style="display: none;">
+                        {{ input('size', 'size', "Taille", 'S') }}
+                    </div>
+                    <div id="group-Alimentaire" class="group" style="display: none;">
+                        {{ input('dateExpiration', 'dateExpiration', "Date Expiration", '01/05/2024', 'date') }}
+                    </div>
+                    {{ submit() }}
+                </form>
+            </div>
+        </section>
+    </main>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="/assets/js/product.js"></script>
+{% endblock %}

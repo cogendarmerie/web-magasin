@@ -58,4 +58,14 @@ class CustomerOrm extends Orm
     {
         return $this->create($customer->toArray());
     }
+
+    /**
+     * Supprimer un client
+     * @param string $id
+     * @return bool
+     */
+    public function remove(string $id): bool
+    {
+        return $this->delete($id);
+    }
 }

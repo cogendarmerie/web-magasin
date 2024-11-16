@@ -6,9 +6,9 @@ use Domain\Product;
 
 class Alimentaire extends Product
 {
-    public function __construct(?string $id, float|int $price, string $name, int $quantity, protected \DateTime $dateExpiration)
+    public function __construct(float|int $price, string $name, int $quantity, protected \DateTime $dateExpiration, ?string $id = null)
     {
-        parent::__construct(id: $id, price: $price, name: $name, category: "alimentaire", quantity: $quantity);
+        parent::__construct(id: $id, price: $price, name: $name, category: "Alimentaire", quantity: $quantity);
 
         if(!$this->validateDateUlterieur())
         {

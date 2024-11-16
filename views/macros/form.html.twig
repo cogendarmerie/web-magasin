@@ -1,12 +1,23 @@
 {% macro input(name, id, label, placeholder, type = 'text') %}
 <div class="form-control-wrapper">
     <label for="{{ id }}">{{ label }}</label>
-    <input type="{{ type }}" id="{{ type }}" name="{{ name }}" placeholder="{{ placeholder }}">
+    <input type="{{ type }}" id="{{ id }}" name="{{ name }}" placeholder="{{ placeholder }}">
 </div>
 {% endmacro %}
 
 {% macro submit(label = "Valider") %}
 <div>
     <button type="submit" class="button button-primary">{{ label }}</button>
+</div>
+{% endmacro %}
+
+{% macro select(name, id, label, options) %}
+<div class="form-control-wrapper">
+    <label for="{{ id }}">{{ label }}</label>
+    <select name="{{ name }}" id="{{ id }}">
+        {% for option in options %}
+            <option value="{{ option.value }}">{{ option.text }}</option>
+        {% endfor %}
+    </select>
 </div>
 {% endmacro %}

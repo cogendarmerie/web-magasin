@@ -5,12 +5,18 @@ routes:
   products:
     path: /products
     controller: ProductsController@index
+  product_create:
+    path: /product/create
+    controller: ProductsController@create
   customers:
     path: /customers
     controller: CustomerController@index
   customer_create:
     path: /customer/create
     controller: CustomerController@create
+  customer_delete:
+    path: /customer/delete
+    controller: CustomerController@delete
   customer:
     path: /customer/{customerId}
     controller: CustomerController@details
