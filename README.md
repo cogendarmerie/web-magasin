@@ -2,8 +2,6 @@
 
 Projet étudiant en 3ème année à l'IT-AKADEMY
 
-Par **Corentin SAMARD--EYMONERIE**
-
 ## Prérequis
 
 Vous devez disposez à minimas sur votre machine :
