@@ -1,0 +1,12 @@
+{% macro input(name, id, label, placeholder, type = 'text') %}
+<div class="form-control-wrapper">
+    <label for="{{ id }}">{{ label }}</label>
+    <input type="{{ type }}" id="{{ type }}" name="{{ name }}" placeholder="{{ placeholder }}">
+</div>
+{% endmacro %}
+
+{% macro submit(label = "Valider") %}
+<div>
+    <button type="submit" class="button button-primary">{{ label }}</button>
+</div>
+{% endmacro %}

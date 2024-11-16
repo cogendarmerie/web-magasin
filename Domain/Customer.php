@@ -4,14 +4,14 @@ namespace Domain;
 
 use Infra\Uuid;
 
-class Client
+class Customer
 {
     protected string $id;
 
     public function __construct(
-        ?string $id = null,
         protected string $name,
-        protected string $email
+        protected string $email,
+        ?string $id = null
     )
     {
         $this->id = $id ?? Uuid::uuid4()->toString();
@@ -45,5 +45,14 @@ class Client
     public function getEmail(): string
     {
         return $this->email;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'email' => $this->getEmail(),
+            'name' => $this->getName()
+        ];
     }
 }

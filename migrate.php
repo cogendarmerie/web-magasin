@@ -49,7 +49,7 @@ class Migrator
 }
 
 // Connexion à la base de donnée
-$pdo = new PDO('mysql:host=db;dbname=mag', 'mag', 'mag');
+$pdo = new PDO('mysql:host=db;dbname=gestion_magasin', 'mag', 'mag');
 
 // Exécuter les migrations
 $migrator = new Migrator($pdo);

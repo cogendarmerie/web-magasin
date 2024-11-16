@@ -7,8 +7,8 @@
     <main>
         <header class="page-wrapper">
             <div>
-                <h1>John DOE</h1>
-                {{ breadcrumb('Clients', 'John DOE') }}
+                <h1>{{ customer.name }}</h1>
+                {{ breadcrumb('Clients', customer.name) }}
             </div>
         </header>
         <section class="page-wrapper">
@@ -16,7 +16,7 @@
                 <h2>Détails</h2>
             </div>
             <div>
-                <p>Email : johndoe@example.com</p>
+                <p>Email : {{ customer.email }}</p>
             </div>
         </section>
         <section class="page-wrapper">
@@ -24,7 +24,7 @@
                 <h2>Commandes</h2>
             </div>
             <div>
-
+                <p>Ce client n'a encore réalisée aucun achat.</p>
             </div>
         </section>
     </main>

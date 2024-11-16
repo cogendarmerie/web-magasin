@@ -24,7 +24,7 @@ services:
     container_name: mag_db
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: mag
+      MYSQL_DATABASE: gestion_magasin
       MYSQL_USER: mag
       MYSQL_PASSWORD: mag
     volumes:

@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 {% from 'macros/breadcrumb.html.twig' import breadcrumb %}
+{% from 'macros/customer.html.twig' import customer_card %}
 
 {% block title %}Clients{% endblock %}
 
@@ -11,5 +12,12 @@
                 {{ breadcrumb('', 'Clients') }}
             </div>
         </header>
+        <section class="page-wrapper">
+            <div>
+                {% for customer in customers %}
+                    {{ customer_card(customer) }}
+                {% endfor %}
+            </div>
+        </section>
     </main>
 {% endblock %}

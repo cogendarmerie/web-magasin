@@ -1,0 +1,14 @@
+{% macro customer_card(customer) %}
+    <div class="customer-card">
+        <div class="avatar-wrapper">
+            <img src="https://i.pravatar.cc/80?u={{ customer.email }}" alt="Avatar utilisateur">
+        </div>
+        <div class="identity-wrapper">
+            <p>{{ customer.name }}</p>
+            <p>{{ customer.email }}</p>
+        </div>
+        <div>
+            <a href="/customer/{{ customer.id }}" class="button button-primary">Détails</a>
+        </div>
+    </div>
+{% endmacro %}

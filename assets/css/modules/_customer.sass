@@ -1,0 +1,27 @@
+@use "_variables" as v
+
+.customer-card
+  display: flex
+  flex-direction: row
+  align-items: center
+  gap: 2rem
+
+  .avatar-wrapper
+    img
+      height: 80px
+      width: 80px
+      object-position: center
+      object-fit: cover
+      border-radius: 100rem
+
+  .identity-wrapper
+    p
+      margin: 0
+
+    > p:first-child
+      font-size: 18px
+      font-weight: 600
+
+    > p:last-child
+      font-size: 14px
+      color: rgba(v.$color-blue, .8)

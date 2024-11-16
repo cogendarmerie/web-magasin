@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 {% from 'macros/breadcrumb.html.twig' import breadcrumb %}
+{% from 'macros/form.html.twig' import input, submit %}
 
 {% block title %}Créer un client{% endblock %}
 
@@ -11,5 +12,14 @@
                 {{ breadcrumb('Clients', 'Nouveau') }}
             </div>
         </header>
+        <section class="page-wrapper">
+            <div>
+                <form action="" method="POST">
+                    {{ input('name', 'name', 'Nom', 'John DOE') }}
+                    {{ input('email', 'email', 'Adresse email', 'johndoe@example.com', 'email') }}
+                    {{ submit() }}
+                </form>
+            </div>
+        </section>
     </main>
 {% endblock %}

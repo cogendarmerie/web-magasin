@@ -9,10 +9,10 @@ class Commande
     protected string $id;
 
     public function __construct(
-        ?string $id = null,
-        protected Client $client,
+        ?string             $id = null,
+        protected Customer  $client,
         protected \DateTime $dateCommande,
-        protected array $products
+        protected array     $products
     )
     {
         $this->id = $id ?? Uuid::uuid4()->toString();
@@ -23,7 +23,7 @@ class Commande
         return $this->id;
     }
 
-    public function getClient(): Client
+    public function getClient(): Customer
     {
         return $this->client;
     }

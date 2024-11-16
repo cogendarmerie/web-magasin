@@ -2,6 +2,7 @@
 // Fichier routeur
 require_once '../autoload.php';
 require_once '../vendor/autoload.php';
+require_once '../config/config.php';
 
 define('ROOT', dirname(__DIR__));
 

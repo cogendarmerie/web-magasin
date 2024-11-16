@@ -15,8 +15,14 @@ abstract class Controller
         $this->twig = new Environment($this->loader);
     }
 
-    public function display(string $view, array $params = [])
+    protected function display(string $view, array $params = [])
     {
         $this->twig->display($view, $params);
+    }
+
+    protected function redirect(string $url)
+    {
+        header("Location: $url");
+        exit();
     }
 }
