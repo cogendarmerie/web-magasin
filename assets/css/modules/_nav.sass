@@ -1,10 +1,12 @@
+@use "_variables" as v
+
 nav#left-nav
   position: fixed
   left: 0
   top: 0
   bottom: 0
   width: 15rem
-  background-color: $color-nav-background
+  background-color: v.$color-nav-background
   z-index: 999
 
   &:not(.open)
@@ -21,7 +23,7 @@ nav#left-nav
         p
           font-size: 14px
           text-transform: uppercase
-          color: rgba($color-blue, .5)
+          color: rgba(v.$color-blue, .5)
           font-weight: 700
 
       // Liens
@@ -36,7 +38,7 @@ nav#left-nav
       a
         display: block
         text-decoration: none
-        color: $color-blue
+        color: v.$color-blue
         transition: all .25s ease
 
         &:hover
@@ -68,7 +70,7 @@ nav#top-nav
 
   .nav-wrapper
     height: 4rem
-    background-color: $color-blue
+    background-color: v.$color-blue
     display: flex
     flex-direction: row
     justify-content: space-between

@@ -1,3 +1,5 @@
+@use "_variables" as v
+
 .button
   display: inline-flex
   flex-direction: row
@@ -10,13 +12,13 @@
   line-height: 16px
   border-radius: .5rem
   transition: all .25s ease
-  border: 1px solid $color-blue
+  border: 1px solid v.$color-blue
   font-weight: 600
 
 .button-primary
-  background-color: $color-blue
+  background-color: v.$color-blue
   color: white
 
   &:hover
     background-color: transparent
-    color: $color-blue
+    color: v.$color-blue

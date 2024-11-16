@@ -1,3 +1,5 @@
+@use "_variables" as v
+
 .product
   > div:first-child
     h3, p
@@ -9,7 +11,7 @@
 
     p
       font-size: 16px
-      color: rgba($color-blue, .8)
+      color: rgba(v.$color-blue, .8)
 
 .products-list
   display: grid

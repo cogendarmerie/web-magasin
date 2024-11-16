@@ -39,3 +39,10 @@ services:
       PMA_HOST: db
     depends_on:
       - db
+  sass:
+    build:
+      context: .
+      dockerfile: ./.docker/sass/Dockerfile
+    container_name: mag_sass
+    volumes:
+      - .:/app

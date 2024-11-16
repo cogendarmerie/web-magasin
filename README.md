@@ -10,6 +10,7 @@ Vous devez disposez à minimas sur votre machine :
 - Docker
 - Un naviguateur internet
 - Make
+- SASS
 
 ## Installation
 
@@ -20,6 +21,22 @@ Construire les containers docker avec la commande :
 ```
 docker compose up --build
 ```
+
+### Base de donnée
+
+Après avoir lancée Docker, se connecter au container php via le terminal :
+
+```
+docker exec -it mag_php /bin/bash
+```
+
+Puis dans le terminal :
+
+```
+php migrate.php
+```
+
+Ce fichier va venir créer toutes les tables dans la base de donnée.
 
 ### Makefile
 
