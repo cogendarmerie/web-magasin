@@ -2,48 +2,57 @@
 
 Projet étudiant en 3ème année à l'IT-AKADEMY
 
-Par Corentin SAMARD--EYMONERIE
+Par **Corentin SAMARD--EYMONERIE**
 
 ## Prérequis
 
 Vous devez disposez à minimas sur votre machine :
 - Docker
 - Un naviguateur internet
-- Make
-- SASS
+- Make **(Recommandé)**
 
-## Installation
+## Usage
 
-### Docker
+### Méthode 1 - Makefile (Recommandé)
 
-Construire les containers docker avec la commande :
+Créer les containers docker, créer les tables dans la base de données et compile les fichiers CSS.
 
-```
-docker compose up --build
-```
-
-### Base de donnée
-
-Après avoir lancée Docker, se connecter au container php via le terminal :
-
-```
-docker exec -it mag_php /bin/bash
+```shell
+make compile
 ```
 
-Puis dans le terminal :
+#### Lancer les containers (Déjà compiler)
 
+```shell
+make run
 ```
-php migrate.php
+
+#### Arrêter les containers
+
+```shell
+make stop
 ```
 
-Ce fichier va venir créer toutes les tables dans la base de donnée.
+### Méthode 2 - Manuel
 
-### Makefile
+Construire les containers
 
-Pour compiler les fichiers CSS, il est nécessaire de faire la commande :
-
+```shell
+docker compose up --build -d
 ```
-make dev
+
+> L'argument **-d** n'est pas obligatoire. Il permet de lancer les containers en arrière plan.
+
+Compiler les fichiers CSS
+
+```shell
+docker exec -it mag_sass /bin/sh -c "sass ./assets/css/main.sass ./public/assets/css/main.css --no-source-map --style=compressed"
+```
+
+Construire les tables dans la base de donnée
+
+```shell
+docker exec -it mag_php /bin/bash -c "php migrate.php"
 ```
 
 ## Accès
@@ -56,3 +65,5 @@ L'accès à l'interface web se fait via un naviguateur classique via le port 808
 - Saisir `http://localhost:8080`
 
 [Ouvrir dans le naviguateur par défault](http://localhost:8080)
+
+> Un container **Phpmyadmin** est construit également pour administrer la base de donnée au besoin. Il est disponible sur le port **8081**. Les identifiants de connexion sont disponible dans le fichier **docker-compose.yml**.
