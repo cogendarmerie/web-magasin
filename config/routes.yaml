@@ -2,15 +2,27 @@ routes:
   home:
     path: /
     controller: HomeController@index
+
+  # Api Product
+  api_v1_product_guarantee_stop:
+    path: /api/v1/product/guarantee/stop
+    controller: ApiProductsController@guaranteeStop
+
+  # Product
   products:
     path: /products
     controller: ProductsController@index
   product_create:
     path: /product/create
     controller: ProductsController@create
+  product_delete:
+    path: /product/delete
+    controller: ProductsController@delete
   product_details:
     path: /product/{productId}
     controller: ProductsController@details
+
+  # Customer
   customers:
     path: /customers
     controller: CustomerController@index
@@ -23,3 +35,8 @@ routes:
   customer:
     path: /customer/{customerId}
     controller: CustomerController@details
+
+  # Orders
+  orders:
+    path: /orders
+    controller: OrderController@index

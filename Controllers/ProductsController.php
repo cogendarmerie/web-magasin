@@ -48,9 +48,9 @@ class ProductsController extends Controller
             // Création de l'objet produit
             $factory = new ProductFactory();
             $product = $factory->createProduct($category, $_POST);
-
             $productInsertion = $this->productOrm->insert($product);
 
+            // Résultat de l'opération
             if($productInsertion)
             {
                 $this->redirect('/products');
@@ -82,5 +82,22 @@ class ProductsController extends Controller
                 ]
             ]
         ]);
+    }
+
+    public function delete(): void
+    {
+        // Récupérer l'id du produit dans l'URL
+        $productId = $_GET['productId'];
+
+        $deletion = $this->productOrm->delete($productId);
+
+        if($deletion)
+        {
+            $this->redirect('/products');
+        }
+        else
+        {
+            echo "Une erreur est survenue lors de la suppression";
+        }
     }
 }

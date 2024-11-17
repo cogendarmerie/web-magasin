@@ -20,7 +20,7 @@ class ElectromenagerTest extends TestCase
             guarantee: new \DateTime("2050-10-15")
         );
 
-        $this->assertTrue($frigo->checkGuarantee(), "La garantit n'est pas encore dépassée.");
+        $this->assertTrue($frigo->isGuarantee(), "La garantit n'est pas encore dépassée.");
     }
 
     /**
@@ -36,6 +36,6 @@ class ElectromenagerTest extends TestCase
             guarantee: new \DateTime("2000-10-15")
         );
 
-        $this->assertFalse($ordinateur->checkGuarantee(), "La garantit de l'ordinateur est dépassée.");
+        $this->assertFalse($ordinateur->isGuarantee(), "La garantit de l'ordinateur est dépassée.");
     }
 }

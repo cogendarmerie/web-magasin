@@ -13,7 +13,7 @@ class CreateOrderTable extends Migration
         $this->pdo->exec($sql);
 
         // Table relation order & products
-        $sql = 'CREATE TABLE IF NOT EXISTS orders_product (order_id VARCHAR(255) NOT NULL, product_id VARCHAR(255) NOT NULL, quantity INT NOT NULL, PRIMARY KEY (order_id, product_id), FOREIGN KEY (order_id) REFERENCES orders(id), FOREIGN KEY (product_id) REFERENCES product(id))';
+        $sql = 'CREATE TABLE IF NOT EXISTS orders_product (order_id VARCHAR(255) NOT NULL, product_id VARCHAR(255) NOT NULL, quantity INT NOT NULL, PRIMARY KEY (order_id, product_id), FOREIGN KEY (order_id) REFERENCES order(id), FOREIGN KEY (product_id) REFERENCES product(id))';
         $this->pdo->exec($sql);
     }
 

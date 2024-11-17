@@ -20,8 +20,37 @@ class Electromenager extends Product
         return $this->guarantee;
     }
 
-    public function checkGuarantee(): bool
+    /**
+     * Retourne si le produit est encore sous garantit
+     * @return bool
+     */
+    public function isGuarantee(): bool
     {
         return $this->guarantee > new \DateTime();
+    }
+
+    /**
+     * Terminer la garantit du produit
+     * @return $this
+     */
+    public function stopGuarantee(): Electromenager
+    {
+        if(!$this->isGuarantee())
+        {
+            throw new \Exception("Le produit n'est déjà plus sous garantit");
+        }
+
+        $this->guarantee = new \DateTime();
+        return $this;
+    }
+
+    /**
+     * Ajoute 2 ans supplémentaire à la garantit
+     * @return $this
+     */
+    public function augmenteGuarantee(): Electromenager
+    {
+        $this->guarantee->add(new \DateInterval('P2Y'));
+        return $this;
     }
 }

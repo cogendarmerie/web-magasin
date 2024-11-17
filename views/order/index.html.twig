@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+{% from 'macros/breadcrumb.html.twig' import breadcrumb %}
+{% from 'macros/order.html.twig' import order_card %}
+
+{% block title %}Commandes{% endblock %}
+
+{% block body %}
+    <main>
+        <header class="page-wrapper">
+            <div>
+                <h1>Commandes</h1>
+                {{ breadcrumb('', 'Commandes') }}
+            </div>
+        </header>
+        <section class="page-wrapper">
+            <div>
+                {% for order in orders %}
+                    {{ order_card(order) }}
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+{% endblock %}

@@ -51,6 +51,19 @@
                 <div>
                     <p>Fin de garantie {{ product.guarantee | date("d/m/Y") }}</p>
                 </div>
+                {% if product.isGuarantee %}
+                    <div>
+                        <h3>Gestion de la garantie</h3>
+                    </div>
+                    <div>
+                        <button class="button button-primary">Augmenter la garantit</button>
+                        <button class="button button-ghost">Annuler la garantit</button>
+                    </div>
+                {% else %}
+                <div>
+                    <p>La garantit du produit est expirée.</p>
+                </div>
+                {% endif %}
             </section>
         {% endif %}
         <section class="page-wrapper">
