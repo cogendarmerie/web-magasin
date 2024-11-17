@@ -27,3 +27,7 @@ public/assets/css/main.css
 ###> Fichiers log
 .docker/nginx/log
 ###<
+
+###> PhpUnit (Test Unitaire)
+.phpunit.result.cache
+###<

@@ -2,6 +2,14 @@
     "require": {
         "mustangostang/spyc": "^0.6.3",
         "twig/twig": "^3.14",
-        "ramsey/uuid": "^4.7"
+        "ramsey/uuid": "^4.7",
+        "phpunit/phpunit": "^11.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Domain\\": "Domain/",
+            "Infra\\": "Infra/",
+            "Tests\\": "tests/"
+        }
     }
 }

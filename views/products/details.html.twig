@@ -59,7 +59,7 @@
             </div>
             <div>
                 <button class="button button-destructive" id="delete-user">Supprimer {{ product.name }}</button>
-                {{ modal_deletion('modal_deletion', product.name, '/product/delete?productId=' ~ customer.id) }}
+                {{ modal_deletion('modal_deletion', product.name, '/product/delete?productId=' ~ product.id) }}
             </div>
         </section>
     </main>

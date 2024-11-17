@@ -53,6 +53,14 @@ Construire les tables dans la base de donnée
 docker exec -it mag_php /bin/bash -c "php migrate.php"
 ```
 
+## Test unitaire
+
+Pour vérifier que tous fonctionne, vous pouvez lancez les tests unitaire via la commande 
+
+```shell
+make test
+```
+
 ## Accès
 
 ### Interface web

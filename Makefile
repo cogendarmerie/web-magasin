@@ -1,6 +1,5 @@
 docker-compose ?= $(shell which docker) compose -f docker-compose.yml
 docker-exec ?= $(shell which docker) exec -it
-
 sass ?= $(docker-exec) mag_sass /bin/sh -c "sass ./assets/css/main.sass ./public/assets/css/main.css --no-source-map --style=compressed"
 
 open-website ?= open http://localhost:8080
@@ -46,3 +45,7 @@ sass:
 .PHONY: open
 open:
 	$(open-website)
+
+.PHONY: test
+test:
+	$(docker-exec) mag_php /bin/bash -c "php vendor/bin/phpunit --bootstrap tests/AlimentaireTest.php"

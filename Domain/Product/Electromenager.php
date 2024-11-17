@@ -20,8 +20,8 @@ class Electromenager extends Product
         return $this->guarantee;
     }
 
-    private function checkGuarantee(): bool
+    public function checkGuarantee(): bool
     {
-        return new \DateTime($this->guarantee) > new \DateTime();
+        return $this->guarantee > new \DateTime();
     }
 }
