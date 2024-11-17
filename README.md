@@ -16,7 +16,7 @@ Vous devez disposez à minimas sur votre machine :
 Créer les containers docker, créer les tables dans la base de données et compile les fichiers CSS.
 
 ```shell
-make compile
+make build
 ```
 
 #### Lancer les containers (Déjà compiler)
