@@ -1,16 +1,24 @@
-{% macro product_card(name, price, category, quantity, dlc) %}
+{% macro product_card(product) %}
     <div class="product">
         <div>
-            <h3>{{ name }}</h3>
-            <p>{{ price }} €</p>
+            <h3>{{ product.name }}</h3>
+            <p>{{ product.price }} €</p>
         </div>
         <div>
-            <p>{{ category }}</p>
-            <p>{{ quantity }} en stock</p>
-            <p>DLC {{ dlc | date('d/m/Y') }}</p>
+            <p>{{ product.category }}</p>
+            <p>{{ product.quantity }} en stock</p>
+            {% if product.category is same as "Textile" %}
+                <p>Taille {{ product.size }}</p>
+            {% endif %}
+            {% if product.category is same as "Alimentaire" %}
+            <p>DLC {{ product.dateExpiration | date('d/m/Y') }}</p>
+            {% endif %}
+            {% if product.category is same as "Electromenager" %}
+                <p>Garantie {{ product.guarantee | date('d/m/Y') }}</p>
+            {% endif %}
         </div>
         <div>
-            <a href="#" class="button button-primary">Détails</a>
+            <a href="/product/{{ product.id }}" class="button button-primary">Détails</a>
         </div>
     </div>
 {% endmacro %}

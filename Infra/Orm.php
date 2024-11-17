@@ -48,10 +48,20 @@ abstract class Orm
      */
     protected function create(array $data): bool
     {
-        $columns = implode(', ', array_keys($data));
-        $placeholders = implode(', ', array_fill(0, count($data), '?'));
+        $columns = array();
+        foreach (array_keys($data) as $key)
+        {
+            $columns[] = $this->convertPropertyName($key);
+        }
+        $columns = implode(', ', $columns);
+        $placeholders = array();
+        foreach ($data as $key => $value)
+        {
+            $placeholders[] = ":{$key}";
+        }
+        $placeholders = implode(', ', $placeholders);
         $stmt = $this->pdo->prepare("INSERT INTO {$this->tableName} ({$columns}) VALUES ({$placeholders})");
-        return $stmt->execute(array_values($data));
+        return $stmt->execute($this->prepareData($data));
     }
 
     /**
@@ -62,14 +72,14 @@ abstract class Orm
      */
     public function update(string $id, array $data): bool
     {
-        $set = [];
+        $set = array();
         foreach ($data as $key => $value)
         {
-            $set[] = "{$key} = ?";
+            $set[] = $this->convertPropertyName($key) . " = :{$key}";
         }
         $set = implode(', ', $set);
         $stmt = $this->pdo->prepare("UPDATE {$this->tableName} SET {$set} WHERE {$this->primaryKey} = :id");
-        $stmt->execute(array_merge(['id' => $id], array_values($data)));
+        $stmt->execute(array_merge(['id' => $id], $this->prepareData($data)));
         return $stmt->rowCount() > 0;
     }
 
@@ -83,5 +93,32 @@ abstract class Orm
         $stmt = $this->pdo->prepare("DELETE FROM {$this->tableName} WHERE {$this->primaryKey} = :id");
         $stmt->execute(['id' => $id]);
         return $stmt->rowCount() > 0;
+    }
+
+    /**
+     * Préparer les données avant l'insertion ou la mise à jour
+     * @param array $data
+     * @return array
+     */
+    private function prepareData(array $data): array
+    {
+        foreach ($data as $key => $value)
+        {
+            if($value instanceof \DateTime)
+            {
+                $data[$key] = $value->format('Y-m-d H:i:s');
+            }
+        }
+        return $data;
+    }
+
+    /**
+     * Convertir les noms de propriétés en snake case
+     * @param string $name
+     * @return string
+     */
+    private function convertPropertyName(string $name): string
+    {
+        return strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $name));
     }
 }

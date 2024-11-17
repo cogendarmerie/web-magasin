@@ -8,6 +8,9 @@ routes:
   product_create:
     path: /product/create
     controller: ProductsController@create
+  product_details:
+    path: /product/{productId}
+    controller: ProductsController@details
   customers:
     path: /customers
     controller: CustomerController@index

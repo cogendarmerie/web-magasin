@@ -15,7 +15,7 @@
     <section class="page-wrapper">
         <div class="products-list">
             {% for product in products %}
-                {{ product_card(product.name, product.price, product.category, product.quantity, product.dataExpiration) }}
+                {{ product_card(product) }}
             {% endfor %}
         </div>
     </section>

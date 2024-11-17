@@ -19,7 +19,8 @@ class ProductOrm extends Orm
      */
     public function insert(Product $product): bool
     {
-        return $this->create($product->toArray());
+        $p = $product->toArray();
+        return $this->create($p);
     }
 
     /**
@@ -39,5 +40,12 @@ class ProductOrm extends Orm
         }
 
         return $array;
+    }
+
+    public function get(string $id): Product\Electromenager|Product\Alimentaire|Product\Textile|null
+    {
+        $productFactory = new Product\ProductFactory();
+        $product = $this->find($id);
+        return $productFactory->createProduct($product['category'], $product);
     }
 }

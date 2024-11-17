@@ -34,7 +34,8 @@ class ProductFactory
         if($category == "Alimentaire")
         {
             // Vérification de la dlc
-            $params['dateExpiration'] = new DateTime($params['dateExpiration']);
+            $params['dateExpiration'] = new DateTime($params['date_expiration'] ?? $params['dateExpiration']);
+            unset($params['date_expiration']);
         }
 
         // Produit éléctroménager
@@ -65,16 +66,17 @@ class ProductFactory
      */
     private function filterAllowedParams(string $category, array $params): array
     {
+        $allowedParams = ["id", "name", "price", "quantity"];
         switch ($category)
         {
             case "Alimentaire":
-                $allowedParams = ["name", "price", "quantity", "dateExpiration"];
+                $allowedParams = array_merge($allowedParams, ["dateExpiration", "date_expiration"]);
                 break;
             case "Electromenager":
-                $allowedParams = ["name", "price", "guarantee", "quantity"];
+                $allowedParams = array_merge($allowedParams, ["guarantee"]);
                 break;
             case "Textile":
-                $allowedParams = ["name", "price", "size", "quantity"];
+                $allowedParams = array_merge($allowedParams, ["size"]);
                 break;
         }
 

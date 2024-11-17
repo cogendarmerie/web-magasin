@@ -24,6 +24,15 @@ class ProductsController extends Controller
         ]);
     }
 
+    public function details(string $productId): void
+    {
+        $product = $this->productOrm->get($productId);
+
+        $this->display('products/details.html.twig', [
+            'product' => $product
+        ]);
+    }
+
     public function create(): void
     {
         if($_SERVER['REQUEST_METHOD'] === 'POST')
