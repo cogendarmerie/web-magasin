@@ -5,7 +5,7 @@ use Domain\Product\Alimentaire;
 use Domain\Product\ProductFactory;
 use Infra\Orm\ProductOrm;
 
-class ProductsController extends Controller
+class ProductsController extends AbstractController
 {
     protected ProductOrm $productOrm;
 

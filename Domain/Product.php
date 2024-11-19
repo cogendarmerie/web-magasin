@@ -70,7 +70,6 @@ abstract class Product
     public function sortieStock(int $quantity): Product
     {
         $this->quantity -= $quantity;
-        $this->update();
         return $this;
     }
 

@@ -71,8 +71,37 @@ class Order
         return $this;
     }
 
+    /**
+     * Ajouter un tableau contenant des articles à la commande
+     * @param array $products
+     * @return $this
+     * @throws \Exception
+     */
+    public function addProducts(array $products): Order
+    {
+        foreach($products as $product)
+        {
+            $this->addProduct($product);
+        }
+        return $this;
+    }
+
+    /**
+     * Retourne les articles contenu dans la commande
+     * @return array Contient les articles
+     */
+    public function getProducts(): array
+    {
+        return $this->products;
+    }
+
     public function toArray(): array
     {
-        return get_object_vars($this);
+        return [
+            'id' => $this->id,
+            'customer' => $this->customer->getId(),
+            'dateCommande' => $this->dateCommande->format("Y-m-d H:i:s"),
+            'products' => $this->products
+        ];
     }
 }

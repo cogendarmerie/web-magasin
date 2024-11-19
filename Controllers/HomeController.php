@@ -2,7 +2,7 @@
 
 namespace Controllers;
 
-class HomeController extends Controller
+class HomeController extends AbstractController
 {
     public function index()
     {

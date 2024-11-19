@@ -39,4 +39,7 @@ routes:
   # Orders
   orders:
     path: /orders
-    controller: OrderController@index
+    controller: OrdersController@index
+  orders_create:
+    path: /orders/create
+    controller: OrdersController@create

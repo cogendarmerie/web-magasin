@@ -7,7 +7,7 @@ use Infra\Orm\CustomerOrm;
 use PDO;
 use PDOException;
 
-class CustomerController extends Controller
+class CustomerController extends AbstractController
 {
     protected CustomerOrm $orm;
 

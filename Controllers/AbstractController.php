@@ -4,7 +4,7 @@ namespace Controllers;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
-abstract class Controller
+abstract class AbstractController
 {
     private $loader;
     protected $twig;
