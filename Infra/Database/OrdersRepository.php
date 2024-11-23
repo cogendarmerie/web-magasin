@@ -17,7 +17,51 @@ class OrdersRepository extends DatabaseRepository implements DatabaseInterface
 
     public function findOneById(string $id)
     {
-        // TODO: Implement findOneById() method.
+        $sql = "SELECT * FROM orders WHERE id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            "id" => $id
+        ]);
+        $data = $stmt->fetch();
+        $order = new Order(
+            id: $data['id'],
+            customer: (new CustomerRepository())->findOneById($data['customer_id']),
+            dateCommande: new \DateTime($data['order_date'])
+        );
+
+        // Récupérer les articles
+        $sql = "SELECT orders_product.quantity, product.id, product.name, product.price, product.category, product.date_expiration, product.guarantee, product.size FROM orders_product LEFT JOIN product ON orders_product.product_id = product.id WHERE order_id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            "id" => $id
+        ]);
+        $data = $stmt->fetchAll();
+        $classBase = "\\Domain\\Produit\\";
+        foreach ($data as $item)
+        {
+            $class = $classBase . $item['category'];
+            $reflexionClass = new \ReflectionClass($class);
+            $constructorParams = $reflexionClass->getConstructor()->getParameters();
+
+            $params = array();
+            foreach ($constructorParams as $param)
+            {
+                $paramName = $param->getName();
+                if(isset($item[$paramName]))
+                {
+                    array_push($params, $item[$paramName]);
+                }
+            }
+
+            var_dump($item);
+            exit();
+
+            $product = new $class(...$params);
+            var_dump($product);
+            exit();
+        }
+
+        return $order;
     }
 
     public function update(string $id, object $object)

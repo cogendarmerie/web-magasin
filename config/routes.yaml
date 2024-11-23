@@ -43,3 +43,6 @@ routes:
   orders_create:
     path: /orders/create
     controller: OrdersController@create
+  orders_details:
+    path: /orders/details/{orderId}
+    controller: OrdersController@details

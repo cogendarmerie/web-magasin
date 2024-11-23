@@ -4,6 +4,7 @@ namespace Controllers;
 
 use Domain\Order;
 use Domain\Product\Alimentaire;
+use Infra\Database\OrdersRepository;
 use Infra\Orm\CustomerOrm;
 use Infra\Orm\OrderOrm;
 use Infra\Orm\ProductOrm;
@@ -13,6 +14,7 @@ class OrdersController extends AbstractController
     protected OrderOrm $orm;
     protected CustomerOrm $customerOrm;
     protected ProductOrm $productOrm;
+    protected OrdersRepository $ordersRepository;
 
     public function __construct()
     {
@@ -20,6 +22,7 @@ class OrdersController extends AbstractController
         $this->orm = new OrderOrm();
         $this->customerOrm = new CustomerOrm();
         $this->productOrm = new ProductOrm();
+        $this->ordersRepository = new OrdersRepository();
     }
 
     public function index(): void
@@ -28,6 +31,20 @@ class OrdersController extends AbstractController
         var_dump(...$orders); exit();
         $this->display('order/index.html.twig', [
             'orders' => $orders
+        ]);
+    }
+
+    public function details(string $orderId): void
+    {
+        try {
+            $order = $this->ordersRepository->findOneById($orderId);
+        } catch (\Exception $exception) {
+            echo "Une erreur est survenue : " . $exception->getMessage();
+            exit();
+        }
+
+        $this->display('order/details.html.twig', [
+            'order' => $order
         ]);
     }
 
