@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 {% from 'macros/breadcrumb.html.twig' import breadcrumb %}
 {% from 'macros/modals.html.twig' import modal_deletion %}
+{% from 'macros/order.html.twig' import order_card %}
 
 {% block title %}Client{% endblock %}
 
@@ -25,7 +26,13 @@
                 <h2>Commandes</h2>
             </div>
             <div>
-                <p>Ce client n'a encore réalisée aucun achat.</p>
+                {% if orders | length > 0 %}
+                    {% for order in orders %}
+                        {{ order_card(order) }}
+                    {% endfor %}
+                {% else %}
+                    <p>Ce client n'a encore réalisée aucun achat.</p>
+                {% endif %}
             </div>
         </section>
         <section class="page-wrapper">

@@ -24,6 +24,24 @@ class Customer
     }
 
     /**
+     * Retourne un nouvel objet modifier
+     * @param string $name
+     * @param string $email
+     * @return $this
+     * @throws \Exception
+     */
+    public function clone(string $name, string $email): self
+    {
+        $customer = new static(
+            name: $this->name,
+            email: $this->email,
+            id: $this->id,
+        );
+
+        return $customer;
+    }
+
+    /**
      * Valider l'adresse email de l'utilisateur
      * @return bool
      */

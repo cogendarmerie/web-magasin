@@ -3,18 +3,25 @@
 namespace Controllers;
 
 use Domain\Customer;
+use Domain\Order;
+use Infra\Database\CustomerRepository;
+use Infra\Database\OrdersRepository;
 use Infra\Orm\CustomerOrm;
 use PDO;
 use PDOException;
 
 class CustomerController extends AbstractController
 {
+    protected CustomerRepository $repository;
+    protected OrdersRepository $ordersRepository;
     protected CustomerOrm $orm;
 
     public function __construct()
     {
         parent::__construct();
         $this->orm = new CustomerOrm();
+        $this->repository = new CustomerRepository();
+        $this->ordersRepository = new OrdersRepository();
     }
 
     /**
@@ -23,7 +30,7 @@ class CustomerController extends AbstractController
      */
     public function index()
     {
-        $customers = $this->orm->getAll();
+        $customers = $this->repository->findAll();
 
         $this->display('customer/index.html.twig', [
             'customers' => $customers
@@ -44,7 +51,7 @@ class CustomerController extends AbstractController
                 );
 
                 // Sauvegarder le client dans la base de donnée
-                $resultCreation = $this->orm->insert($customer);
+                $resultCreation = $this->repository->insert($customer);
 
                 if($resultCreation)
                 {
@@ -66,7 +73,7 @@ class CustomerController extends AbstractController
     }
 
     /**
-     * Supprimer un utilisateur
+     * Supprimer un client
      * @return void
      */
     public function delete(): void
@@ -80,7 +87,7 @@ class CustomerController extends AbstractController
         $customerId = $_GET['customerId'];
 
         // Supprimer le client
-        $deletion = $this->orm->delete($customerId);
+        $deletion = $this->repository->delete($customerId);
 
         if($deletion)
         {
@@ -99,10 +106,13 @@ class CustomerController extends AbstractController
      */
     public function details($customerId)
     {
-        $customer = $this->orm->getById($customerId);
+        $customer = $this->repository->findOneById($customerId);
+
+        $orders = $this->ordersRepository->getCustomerOrders($customer);
 
         $this->display('customer/details.html.twig', [
-            'customer' => $customer
+            'customer' => $customer,
+            'orders' => $orders
         ]);
     }
 }

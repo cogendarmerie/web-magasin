@@ -1,7 +1,15 @@
 {% macro order_card(order) %}
     <div class="order-card">
         <div>
+            <p>Date {{ order.date | date('d/m/Y') }}</p>
             <p>{{ order.customer.name }}</p>
+        </div>
+        <div>
+            {% for product in order.products %}
+                <div>
+                    <p>{{ product.name }} - {{ product.price }}</p>
+                </div>
+            {% endfor %}
         </div>
     </div>
 {% endmacro %}

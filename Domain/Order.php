@@ -9,16 +9,17 @@ class Order
     protected string $id;
     protected Customer $customer;
     protected \DateTime $dateCommande;
-    protected array $products;
+    protected array $products = array();
 
     public function __construct(
         ?string $id = null,
         ?Customer $customer = null,
+        ?\DateTime $dateCommande = null,
     )
     {
         $this->id = $id ?? Uuid::uuid4()->toString();
         $this->customer = $customer;
-        $this->dateCommande = new \DateTime();
+        $this->dateCommande = $dateCommande ?? new \DateTime();
     }
 
     /**
