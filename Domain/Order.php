@@ -96,13 +96,13 @@ class Order
         return $this->products;
     }
 
-    public function toArray(): array
+    public function getTotalPrice(): int
     {
-        return [
-            'id' => $this->id,
-            'customer' => $this->customer->getId(),
-            'dateCommande' => $this->dateCommande->format("Y-m-d H:i:s"),
-            'products' => $this->products
-        ];
+        $total = 0;
+        foreach($this->products as $product)
+        {
+            $total += $product->getPrice();
+        }
+        return $total;
     }
 }

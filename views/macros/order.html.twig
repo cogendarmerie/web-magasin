@@ -5,11 +5,7 @@
             <p>{{ order.customer.name }}</p>
         </div>
         <div>
-            {% for product in order.products %}
-                <div>
-                    <p>{{ product.name }} - {{ product.price }}</p>
-                </div>
-            {% endfor %}
+            <a href="#" class="button button-ghost">Consulter</a>
         </div>
     </div>
 {% endmacro %}
