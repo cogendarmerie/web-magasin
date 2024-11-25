@@ -11,47 +11,48 @@ use InvalidArgumentException;
 class ProduitFactory
 {
     /**
-     * Crée un produit en fonction de la catégorie
-     *
-     * @param string $id Identifiant du produit
-     * @param string $nom Nom du produit
-     * @param float|int $prix Prix du produit
-     * @param int $quantite Quantité du produit
-     * @param string $categorie Catégorie du produit
-     * @param mixed $additionalData Données supplémentaires spécifiques à la catégorie
+     * Créer un objet produit selon son type
+     * @param string $id
+     * @param string $nom
+     * @param float|int $prix
+     * @param int $quantite
+     * @param string $categorie
+     * @param string|null $taille
+     * @param DateTime|string|null $guarantie
+     * @param DateTime|string|null $date_expiration
      * @return Produit
-     * @throws InvalidArgumentException Si la catégorie n'est pas reconnue
+     * @throws \DateMalformedStringException
      */
-    public static function create(string $id, string $nom, float|int $prix, int $quantite, string $categorie, ?string $taille, ?DateTime $guarantie, ?DateTime $date_expiration): Produit
+    public static function create(string $nom, float|int $prix, int $quantite, string $categorie, ?string $taille, null|DateTime|string $guarantie, null|DateTime|string $date_expiration, ?string $id = null): Produit
     {
         switch ($categorie) {
             case 'Alimentaire':
                 return new Alimentaire(
-                    id: $id,
                     nom: $nom,
                     prix: $prix,
                     quantite: $quantite,
                     categorie: $categorie,
-                    dateExpiration: $date_expiration
+                    dateExpiration: $date_expiration instanceof DateTime ? $date_expiration : new DateTime($date_expiration),
+                    id: $id
                 );
             case 'Electromenager':
                 return new Electromenager(
-                    id: $id,
                     nom: $nom,
                     prix: $prix,
                     quantite: $quantite,
                     categorie: $categorie,
-                    guarantie: $guarantie
+                    guarantie: $guarantie instanceof DateTime ? $guarantie : new DateTime($guarantie),
+                    id: $id
                 );
 
             case 'Textile':
                 return new Textile(
-                    id: $id,
                     nom: $nom,
                     prix: $prix,
                     quantite: $quantite,
                     categorie: $categorie,
-                    taille: $taille
+                    taille: $taille,
+                    id: $id
                 );
 
             default:

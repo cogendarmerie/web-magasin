@@ -1,20 +1,20 @@
 {% macro product_card(product) %}
     <div class="product">
         <div>
-            <h3>{{ product.name }}</h3>
-            <p>{{ product.price }} €</p>
+            <h3>{{ product.nom }}</h3>
+            <p>{{ product.prix }} €</p>
         </div>
         <div>
-            <p>{{ product.category }}</p>
-            <p>{{ product.quantity }} en stock</p>
-            {% if product.category is same as "Textile" %}
-                <p>Taille {{ product.size }}</p>
+            <p>{{ product.categorie }}</p>
+            <p>{{ product.quantite }} en stock</p>
+            {% if product.categorie is same as "Textile" %}
+                <p>Taille {{ product.taille }}</p>
             {% endif %}
-            {% if product.category is same as "Alimentaire" %}
+            {% if product.categorie is same as "Alimentaire" %}
             <p>DLC {{ product.dateExpiration | date('d/m/Y') }}</p>
             {% endif %}
-            {% if product.category is same as "Electromenager" %}
-                <p>Garantie {{ product.guarantee | date('d/m/Y') }}</p>
+            {% if product.categorie is same as "Electromenager" %}
+                <p>Garantie {{ product.guarantie | date('d/m/Y') }}</p>
             {% endif %}
         </div>
         <div>

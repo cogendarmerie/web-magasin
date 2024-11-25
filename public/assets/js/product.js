@@ -1,4 +1,4 @@
-const selectCategory = document.querySelector("select#category");
+const selectCategory = document.querySelector("select#categorie");
 const form = document.querySelector("form");
 
 selectCategory.addEventListener("change", function(e){

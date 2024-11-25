@@ -2,6 +2,7 @@
 
 namespace Infra\Database;
 
+use Domain\Produit;
 use Infra\DatabaseInterface;
 use Infra\DatabaseRepository;
 use Infra\Factory\ProduitFactory;
@@ -10,7 +11,7 @@ use PDO;
 class ProduitRepository extends DatabaseRepository implements DatabaseInterface
 {
 
-    public function findAll()
+    public function findAll(): array
     {
         $sql = "SELECT * FROM produit";
         $stmt = $this->pdo->prepare($sql);
@@ -21,20 +22,20 @@ class ProduitRepository extends DatabaseRepository implements DatabaseInterface
         foreach ($data as $item)
         {
             $produit = ProduitFactory::create(...$item);
-
-            var_dump($produit);
-            exit();
+            array_push($produits, $produit);
         }
+
+        return $produits;
     }
 
-    public function findOneById(string $id)
+    public function findOneById(string $id): Produit
     {
         $sql = "SELECT * FROM produits WHERE id = ?";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([$id]);
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $type = $data['type'];
+        return ProduitFactory::create(...$data);
     }
 
     public function update(string $id, object $object)

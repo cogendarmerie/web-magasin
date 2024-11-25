@@ -26,7 +26,7 @@ class Migrator
 //            $this->migrations[] = new $className($this->pdo);
 //        }
 
-        $this->migrations[] = new \migrations\CreeTableProduit($this->pdo);
+        $this->migrations[] = new \migrations\CreerTableProduit($this->pdo);
         $this->migrations[] = new \migrations\CreerTableClient($this->pdo);
         $this->migrations[] = new \migrations\CreerTableCommande($this->pdo);
     }

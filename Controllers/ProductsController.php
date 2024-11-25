@@ -4,6 +4,7 @@ namespace Controllers;
 use Domain\Product\Alimentaire;
 use Domain\Product\ProductFactory;
 use Infra\Database\ProduitRepository;
+use Infra\Factory\ProduitFactory;
 use Infra\Orm\ProductOrm;
 
 class ProductsController extends AbstractController
@@ -40,20 +41,15 @@ class ProductsController extends AbstractController
     {
         if($_SERVER['REQUEST_METHOD'] === 'POST')
         {
-            echo "Cette fonctionnalité à été temporairement désactivée";
-            exit();
-
             // Formulaire soumis
-            if(!isset($_POST['category']))
+            if(!isset($_POST['categorie']))
             {
                 throw new \Exception("Vous devez sélectionner une catégorie");
             }
 
-            $category = $_POST['category'];
-
             // Création de l'objet produit
-            $factory = new ProductFactory();
-            $product = $factory->createProduct($category, $_POST);
+            $product = ProduitFactory::create(...$_POST);
+            var_dump($product); exit();
             $productInsertion = $this->productOrm->insert($product);
 
             // Résultat de l'opération
