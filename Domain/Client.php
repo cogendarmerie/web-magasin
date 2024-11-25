@@ -4,12 +4,12 @@ namespace Domain;
 
 use Infra\Uuid;
 
-class Customer
+class Client
 {
     protected string $id;
 
     public function __construct(
-        protected string $name,
+        protected string $nom,
         protected string $email,
         ?string $id = null
     )
@@ -25,15 +25,15 @@ class Customer
 
     /**
      * Retourne un nouvel objet modifier
-     * @param string $name
+     * @param string $nom
      * @param string $email
      * @return $this
      * @throws \Exception
      */
-    public function clone(string $name, string $email): self
+    public function clone(string $nom, string $email): self
     {
         $customer = new static(
-            name: $this->name,
+            nom: $this->nom,
             email: $this->email,
             id: $this->id,
         );
@@ -55,9 +55,9 @@ class Customer
         return $this->id;
     }
 
-    public function getName(): string
+    public function getNom(): string
     {
-        return $this->name;
+        return $this->nom;
     }
 
     public function getEmail(): string

@@ -4,16 +4,16 @@ namespace Domain;
 
 use Infra\Uuid;
 
-class Order
+class Commande
 {
     protected string $id;
-    protected Customer $customer;
+    protected Client $customer;
     protected \DateTime $dateCommande;
     protected array $products = array();
 
     public function __construct(
-        ?string $id = null,
-        ?Customer $customer = null,
+        ?string    $id = null,
+        ?Client    $customer = null,
         ?\DateTime $dateCommande = null,
     )
     {
@@ -33,9 +33,9 @@ class Order
 
     /**
      * Retourne le client
-     * @return Customer
+     * @return Client
      */
-    public function getCustomer(): Customer
+    public function getCustomer(): Client
     {
         return $this->customer;
     }
@@ -50,7 +50,7 @@ class Order
      * @param Product $product
      * @return $this
      */
-    public function addProduct(Product $product): Order
+    public function addProduct(Product $product): Commande
     {
         if(method_exists($product, "isPerimee"))
         {
@@ -78,7 +78,7 @@ class Order
      * @return $this
      * @throws \Exception
      */
-    public function addProducts(array $products): Order
+    public function addProducts(array $products): Commande
     {
         foreach($products as $product)
         {

@@ -22,7 +22,7 @@ routes:
     path: /product/{productId}
     controller: ProductsController@details
 
-  # Customer
+  # Client
   customers:
     path: /customers
     controller: CustomerController@index

@@ -2,12 +2,12 @@
 
 namespace Infra\Database;
 
-use Domain\Order;
+use Domain\Commande;
 use Infra\DatabaseInterface;
 use Infra\DatabaseRepository;
-use Domain\Customer;
+use Domain\Client;
 
-class OrdersRepository extends DatabaseRepository implements DatabaseInterface
+class CommandeRepository extends DatabaseRepository implements DatabaseInterface
 {
 
     public function findAll()
@@ -17,20 +17,20 @@ class OrdersRepository extends DatabaseRepository implements DatabaseInterface
 
     public function findOneById(string $id)
     {
-        $sql = "SELECT * FROM orders WHERE id = :id";
+        $sql = "SELECT * FROM commande WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([
             "id" => $id
         ]);
         $data = $stmt->fetch();
-        $order = new Order(
+        $order = new Commande(
             id: $data['id'],
-            customer: (new CustomerRepository())->findOneById($data['customer_id']),
-            dateCommande: new \DateTime($data['order_date'])
+            customer: (new ClientRepository())->findOneById($data['customer_id']),
+            dateCommande: new \DateTime($data['date_commande'])
         );
 
         // Récupérer les articles
-        $sql = "SELECT orders_product.quantity, product.id, product.name, product.price, product.category, product.date_expiration, product.guarantee, product.size FROM orders_product LEFT JOIN product ON orders_product.product_id = product.id WHERE order_id = :id";
+        $sql = "SELECT commande_produit.quantity, produit.id, produit.name, produit.price, produit.category, produit.date_expiration, produit.guarantee, produit.size FROM commande_produit LEFT JOIN produit ON commande_produit.produit_id = produit.id WHERE commande_id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([
             "id" => $id
@@ -39,7 +39,7 @@ class OrdersRepository extends DatabaseRepository implements DatabaseInterface
         $classBase = "\\Domain\\Produit\\";
         foreach ($data as $item)
         {
-            $class = $classBase . $item['category'];
+            $class = $classBase . $item['categorie'];
             $reflexionClass = new \ReflectionClass($class);
             $constructorParams = $reflexionClass->getConstructor()->getParameters();
 
@@ -81,12 +81,12 @@ class OrdersRepository extends DatabaseRepository implements DatabaseInterface
 
     /**
      * Retourne un tableau contenant les commandes effectuées par un client
-     * @param Customer $customer
+     * @param Client $customer
      * @return array
      */
-    public function getCustomerOrders(Customer $customer): array
+    public function getCustomerOrders(Client $customer): array
     {
-        $sql = "SELECT * FROM orders WHERE customer_id = :id";
+        $sql = "SELECT * FROM commande WHERE customer_id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(":id", $customer->getId());
         $stmt->execute();
@@ -94,10 +94,10 @@ class OrdersRepository extends DatabaseRepository implements DatabaseInterface
         $orders = array();
         foreach ($data as $order)
         {
-            $orders[] = new Order(
+            $orders[] = new Commande(
                 id: $order['id'],
                 customer: $customer,
-                dateCommande: new \DateTime($order['order_date'])
+                dateCommande: new \DateTime($order['commande_date'])
             );
         }
 

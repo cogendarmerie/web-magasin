@@ -16,10 +16,10 @@ class AlimentaireTest extends TestCase
         // Date dans le futur
         $futureDate = new \DateTime("2050-10-15");
         $fraise = new Alimentaire(
-            name: "Fraise",
-            price: 10.50,
+            nom: "Fraise",
+            prix: 10.50,
             dateExpiration: $futureDate,
-            quantity: 10
+            quantite: 10
         );
 
         // Vérification de la méthode isPerimee
@@ -35,10 +35,10 @@ class AlimentaireTest extends TestCase
         // Date dans le passé
         $pastDate = new \DateTime("2000-10-15");
         $macaron = new Alimentaire(
-            name: "Macaron",
-            price: 10.00,
+            nom: "Macaron",
+            prix: 10.00,
             dateExpiration: $pastDate,
-            quantity: 10
+            quantite: 10
         );
 
         // Vérification de la méthode isPerimee

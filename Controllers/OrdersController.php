@@ -2,9 +2,9 @@
 
 namespace Controllers;
 
-use Domain\Order;
+use Domain\Commande;
 use Domain\Product\Alimentaire;
-use Infra\Database\OrdersRepository;
+use Infra\Database\CommandeRepository;
 use Infra\Orm\CustomerOrm;
 use Infra\Orm\OrderOrm;
 use Infra\Orm\ProductOrm;
@@ -14,7 +14,7 @@ class OrdersController extends AbstractController
     protected OrderOrm $orm;
     protected CustomerOrm $customerOrm;
     protected ProductOrm $productOrm;
-    protected OrdersRepository $ordersRepository;
+    protected CommandeRepository $ordersRepository;
 
     public function __construct()
     {
@@ -22,7 +22,7 @@ class OrdersController extends AbstractController
         $this->orm = new OrderOrm();
         $this->customerOrm = new CustomerOrm();
         $this->productOrm = new ProductOrm();
-        $this->ordersRepository = new OrdersRepository();
+        $this->ordersRepository = new CommandeRepository();
     }
 
     public function index(): void
@@ -60,7 +60,7 @@ class OrdersController extends AbstractController
         var_dump($products);
 
         // Créer la commande
-        $commande = new Order(
+        $commande = new Commande(
             customer: $customer
         );
 

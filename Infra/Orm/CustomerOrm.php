@@ -2,7 +2,7 @@
 
 namespace Infra\Orm;
 
-use Domain\Customer;
+use Domain\Client;
 use Infra\Orm;
 use PDO;
 
@@ -24,7 +24,7 @@ class CustomerOrm extends Orm
         $table = array();
         foreach ($customers as $customer)
         {
-            $table[] = new \Domain\Customer(
+            $table[] = new \Domain\Client(
                 id: $customer['id'],
                 name: $customer['name'],
                 email: $customer['email']
@@ -36,13 +36,13 @@ class CustomerOrm extends Orm
     /**
      * Récupérer un client par son id
      * @param string $id
-     * @return Customer|null
+     * @return Client|null
      * @throws \Exception
      */
-    public function getById(string $id): ?Customer
+    public function getById(string $id): ?Client
     {
         $customer = $this->find($id);
-        return new Customer(
+        return new Client(
             id: $customer['id'],
             name: $customer['name'],
             email: $customer['email']
@@ -51,10 +51,10 @@ class CustomerOrm extends Orm
 
     /**
      * Ajouter un client dans la base de donnée
-     * @param Customer $customer
+     * @param Client $customer
      * @return bool
      */
-    public function insert(Customer $customer): bool
+    public function insert(Client $customer): bool
     {
         return $this->create($customer->toArray());
     }

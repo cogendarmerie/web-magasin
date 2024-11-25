@@ -2,7 +2,7 @@
 
 namespace Infra\Orm;
 
-use Domain\Order;
+use Domain\Commande;
 use Infra\Orm;
 
 class OrderOrm extends Orm
@@ -22,7 +22,7 @@ class OrderOrm extends Orm
         $orders = array();
 
         foreach ($o as $order) {
-            $orders[] = new Order($order);
+            $orders[] = new Commande($order);
         }
 
         return $orders;
@@ -30,10 +30,10 @@ class OrderOrm extends Orm
 
     /**
      * Sauvegrader la commande dans la base de donnée
-     * @param Order $order
+     * @param Commande $order
      * @return void
      */
-    public function save(Order $order): void
+    public function save(Commande $order): void
     {
         $sql = "INSERT INTO " . $this->tableName . " (id, customer_id, order_date) VALUES (:id, :customerId, :orderDate)";
         $stmt = $this->pdo->prepare($sql);

@@ -2,26 +2,26 @@
 
 namespace Controllers;
 
-use Domain\Customer;
-use Domain\Order;
-use Infra\Database\CustomerRepository;
-use Infra\Database\OrdersRepository;
+use Domain\Client;
+use Domain\Commande;
+use Infra\Database\ClientRepository;
+use Infra\Database\CommandeRepository;
 use Infra\Orm\CustomerOrm;
 use PDO;
 use PDOException;
 
 class CustomerController extends AbstractController
 {
-    protected CustomerRepository $repository;
-    protected OrdersRepository $ordersRepository;
+    protected ClientRepository $repository;
+    protected CommandeRepository $ordersRepository;
     protected CustomerOrm $orm;
 
     public function __construct()
     {
         parent::__construct();
         $this->orm = new CustomerOrm();
-        $this->repository = new CustomerRepository();
-        $this->ordersRepository = new OrdersRepository();
+        $this->repository = new ClientRepository();
+        $this->ordersRepository = new CommandeRepository();
     }
 
     /**
@@ -45,7 +45,7 @@ class CustomerController extends AbstractController
             try
             {
                 // Réception des données et création de la fiche client
-                $customer = new Customer(
+                $customer = new Client(
                     name: $_POST['name'],
                     email: $_POST['email']
                 );

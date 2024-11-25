@@ -3,21 +3,24 @@ namespace Controllers;
 
 use Domain\Product\Alimentaire;
 use Domain\Product\ProductFactory;
+use Infra\Database\ProduitRepository;
 use Infra\Orm\ProductOrm;
 
 class ProductsController extends AbstractController
 {
     protected ProductOrm $productOrm;
+    protected ProduitRepository $produitRepository;
 
     public function __construct()
     {
         $this->productOrm = new ProductOrm();
+        $this->produitRepository = new ProduitRepository();
         parent::__construct();
     }
 
     public function index(): void
     {
-        $products = $this->productOrm->getAll();
+        $products = $this->produitRepository->findAll();
 
         $this->display('products/index.html.twig', [
             'products' => $products
@@ -26,7 +29,7 @@ class ProductsController extends AbstractController
 
     public function details(string $productId): void
     {
-        $product = $this->productOrm->get($productId);
+        $product = $this->produitRepository->findOneById($productId);
 
         $this->display('products/details.html.twig', [
             'product' => $product
@@ -37,6 +40,9 @@ class ProductsController extends AbstractController
     {
         if($_SERVER['REQUEST_METHOD'] === 'POST')
         {
+            echo "Cette fonctionnalité à été temporairement désactivée";
+            exit();
+
             // Formulaire soumis
             if(!isset($_POST['category']))
             {

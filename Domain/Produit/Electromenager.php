@@ -7,17 +7,17 @@ use Domain\Produit;
 
 class Electromenager extends Produit
 {
-    protected DateTime $guarantit;
+    protected DateTime $guarantie;
 
-    public function __construct(string $id, string $nom, float|int $prix, int $quantite, string $categorie, DateTime $guarantit)
+    public function __construct(string $id, string $nom, float|int $prix, int $quantite, string $categorie, DateTime $guarantie)
     {
         parent::__construct($id, $nom, $prix, $quantite, $categorie);
-        $this->guarantit = $guarantit;
+        $this->guarantie = $guarantie;
     }
 
-    public function getGuarantit(): DateTime
+    public function getGuarantie(): DateTime
     {
-        return $this->guarantit;
+        return $this->guarantie;
     }
 
     /**
@@ -26,7 +26,7 @@ class Electromenager extends Produit
      */
     public function isOutOfGuarantee(): bool
     {
-        return new DateTime() > $this->guarantit;
+        return new DateTime() > $this->guarantie;
     }
 
     /**
@@ -35,6 +35,6 @@ class Electromenager extends Produit
      */
     public function stopGuarantit()
     {
-        $this->guarantit = new DateTime();
+        $this->guarantie = new DateTime();
     }
 }

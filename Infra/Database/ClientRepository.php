@@ -2,11 +2,11 @@
 
 namespace Infra\Database;
 
-use Domain\Customer;
+use Domain\Client;
 use Infra\DatabaseInterface;
 use Infra\DatabaseRepository;
 
-class CustomerRepository extends DatabaseRepository implements DatabaseInterface
+class ClientRepository extends DatabaseRepository implements DatabaseInterface
 {
 
     /**
@@ -16,13 +16,13 @@ class CustomerRepository extends DatabaseRepository implements DatabaseInterface
      */
     public function findAll(): array
     {
-        $sql = "SELECT * FROM customer";
+        $sql = "SELECT * FROM client";
         $stmt = $this->pdo->query($sql);
         $data = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         $customers = array();
         foreach ($data as $customer) {
-            $customers[] = new Customer(
-                name: $customer['name'],
+            $customers[] = new Client(
+                nom: $customer['nom'],
                 email: $customer['email'],
                 id: $customer['id']
             );
@@ -31,14 +31,14 @@ class CustomerRepository extends DatabaseRepository implements DatabaseInterface
     }
 
     /**
-     * Retourne un objet Customer ou null si aucun client trouver
+     * Retourne un objet Client ou null si aucun client trouver
      * @param string $id
-     * @return Customer|null
+     * @return Client|null
      * @throws \Exception
      */
-    public function findOneById(string $id): ?Customer
+    public function findOneById(string $id): ?Client
     {
-        $sql = "SELECT * FROM customer WHERE id = :id";
+        $sql = "SELECT * FROM client WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(":id", $id);
         $stmt->execute();
@@ -49,8 +49,8 @@ class CustomerRepository extends DatabaseRepository implements DatabaseInterface
             return null;
         }
 
-        return new Customer(
-            name: $data['name'],
+        return new Client(
+            nom: $data['nom'],
             email: $data['email'],
             id: $data['id']
         );
@@ -60,40 +60,40 @@ class CustomerRepository extends DatabaseRepository implements DatabaseInterface
      * Met à jour un client, retourne l'objet modifier
      * @param string $id
      * @param object $object
-     * @return Customer
+     * @return Client
      * @throws \Exception
      */
     public function update(string $id, object $object): bool
     {
-        if(!$object instanceof Customer) {
-            throw new \Exception("Need instance of Customer");
+        if(!$object instanceof Client) {
+            throw new \Exception("Need instance of Client");
         }
 
-        $sql = "UPDATE customer SET name = :name, email = :email WHERE id = :id";
+        $sql = "UPDATE client SET nom = :nom, email = :email WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(":id", $id);
-        $stmt->bindValue(":name", $object->getName());
+        $stmt->bindValue(":nom", $object->getNom());
         $stmt->bindValue(":email", $object->getEmail());
         return $stmt->execute();
     }
 
     public function insert(object $object): bool
     {
-        if(!$object instanceof Customer) {
-            throw new \Exception("Need instance of Customer");
+        if(!$object instanceof Client) {
+            throw new \Exception("Need instance of Client");
         }
 
-        $sql = "INSERT INTO customer (id, name, email) VALUES (:id, :name, :email)";
+        $sql = "INSERT INTO client (id, nom, email) VALUES (:id, :nom, :email)";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(":id", $object->getId());
-        $stmt->bindValue(":name", $object->getName());
+        $stmt->bindValue(":nom", $object->getNom());
         $stmt->bindValue(":email", $object->getEmail());
         return $stmt->execute();
     }
 
     public function delete(string $id): bool
     {
-        $sql = "DELETE FROM customer WHERE id = :id";
+        $sql = "DELETE FROM client WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(":id", $id);
         return $stmt->execute();

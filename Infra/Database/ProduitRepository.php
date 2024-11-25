@@ -6,7 +6,7 @@ use Infra\DatabaseInterface;
 use Infra\DatabaseRepository;
 use PDO;
 
-class ProductRepository extends DatabaseRepository implements DatabaseInterface
+class ProduitRepository extends DatabaseRepository implements DatabaseInterface
 {
 
     public function findAll()
@@ -16,7 +16,7 @@ class ProductRepository extends DatabaseRepository implements DatabaseInterface
 
     public function findOneById(string $id)
     {
-        $sql = "SELECT * FROM products WHERE id = ?";
+        $sql = "SELECT * FROM produits WHERE id = ?";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([$id]);
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
