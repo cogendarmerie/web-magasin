@@ -26,9 +26,9 @@ class Migrator
 //            $this->migrations[] = new $className($this->pdo);
 //        }
 
-        $this->migrations[] = new \migrations\CreateProductTable($this->pdo);
-        $this->migrations[] = new \migrations\CreateCustomerTable($this->pdo);
-        $this->migrations[] = new \migrations\CreateOrderTable($this->pdo);
+        $this->migrations[] = new \migrations\CreeTableProduit($this->pdo);
+        $this->migrations[] = new \migrations\CreerTableClient($this->pdo);
+        $this->migrations[] = new \migrations\CreerTableCommande($this->pdo);
     }
 
     public function up(): void

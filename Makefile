@@ -12,7 +12,7 @@ build:
 	# Compiler les fichiers CSS
 	$(sass)
 	# Créer les tables dans la BDD
-	$(docker-exec) mag_php /bin/bash -c "php migrate.php"
+	$(docker-exec) mag_php /bin/bash -c "composer install && php migrate.php"
 	$(open-website)
 
 # Lancer les containers et compiler les fichiers CSS
