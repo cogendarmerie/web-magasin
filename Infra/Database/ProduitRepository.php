@@ -4,6 +4,7 @@ namespace Infra\Database;
 
 use Infra\DatabaseInterface;
 use Infra\DatabaseRepository;
+use Infra\Factory\ProduitFactory;
 use PDO;
 
 class ProduitRepository extends DatabaseRepository implements DatabaseInterface
@@ -11,7 +12,19 @@ class ProduitRepository extends DatabaseRepository implements DatabaseInterface
 
     public function findAll()
     {
-        // TODO: Implement findAll() method.
+        $sql = "SELECT * FROM produit";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $produits = array();
+        foreach ($data as $item)
+        {
+            $produit = ProduitFactory::create(...$item);
+
+            var_dump($produit);
+            exit();
+        }
     }
 
     public function findOneById(string $id)
