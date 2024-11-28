@@ -46,7 +46,7 @@ class CustomerController extends AbstractController
             {
                 // Réception des données et création de la fiche client
                 $customer = new Client(
-                    name: $_POST['name'],
+                    nom: $_POST['nom'],
                     email: $_POST['email']
                 );
 

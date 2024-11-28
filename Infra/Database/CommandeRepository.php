@@ -86,7 +86,7 @@ class CommandeRepository extends DatabaseRepository implements DatabaseInterface
      */
     public function getCustomerOrders(Client $customer): array
     {
-        $sql = "SELECT * FROM commande WHERE customer_id = :id";
+        $sql = "SELECT * FROM commande WHERE client_id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(":id", $customer->getId());
         $stmt->execute();

@@ -38,14 +38,47 @@ class ProduitRepository extends DatabaseRepository implements DatabaseInterface
         return ProduitFactory::create(...$data);
     }
 
-    public function update(string $id, object $object)
+    public function update(string $id, object $object): bool
     {
-        // TODO: Implement update() method.
+        $sql = "UPDATE produits SET
+                nom = :nom,
+                prix = :prix,
+                quantite = :quantite,
+                categorie = :categorie,
+                taille = :taille,
+                guarantie = :guarantie,
+                date_expiration = :date_expiration
+                WHERE id = :id";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':id', $id);
+        $stmt->bindValue(':nom', $object->getNom());
+        $stmt->bindValue(':prix', $object->getPrix());
+        $stmt->bindValue(':quantite', $object->getQuantite());
+        $stmt->bindValue(':categorie', $object->getCategorie());
+        $stmt->bindValue(':taille', $object->getTaille() ?? null);
+        $stmt->bindValue(':guarantie', $object->getGuarantie() ? $object->getGuarantie()->format('Y-m-d') : null);
+        $stmt->bindValue(':date_expiration', $object->getDateExpiration() ? $object->getDateExpiration()->format('Y-m-d') : null);
+
+        return $stmt->execute();
     }
 
-    public function insert(object $object)
+    public function insert(object $object): bool
     {
-        // TODO: Implement insert() method.
+        $sql = "INSERT INTO produits (id, nom, prix, quantite, categorie, taille, guarantie, date_expiration)
+                VALUES (:id, :nom, :prix, :quantite, :categorie, :taille, :guarantie, :date_expiration)";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':id', $object->getId());
+        $stmt->bindValue(':nom', $object->getNom());
+        $stmt->bindValue(':prix', $object->getPrix());
+        $stmt->bindValue(':quantite', $object->getQuantite());
+        $stmt->bindValue(':categorie', $object->getCategorie());
+        $stmt->bindValue(':taille', $object->getTaille() ?? null);
+        $stmt->bindValue(':guarantie', $object->getGuarantie() ? $object->getGuarantie()->format('Y-m-d') : null);
+        $stmt->bindValue(':date_expiration', $object->getDateExpiration() ? $object->getDateExpiration()->format('Y-m-d') : null);
+
+        return $stmt->execute();
     }
 
     public function delete(string $id)

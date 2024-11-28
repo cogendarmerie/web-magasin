@@ -25,6 +25,11 @@ class ProduitFactory
      */
     public static function create(string $nom, float|int $prix, int $quantite, string $categorie, ?string $taille, null|DateTime|string $guarantie, null|DateTime|string $date_expiration, ?string $id = null): Produit
     {
+        if ($prix < 0)
+        {
+            throw new InvalidArgumentException("Le prix ne peux être négatif.");
+        }
+
         switch ($categorie) {
             case 'Alimentaire':
                 return new Alimentaire(

@@ -9,8 +9,8 @@
     <main>
         <header class="page-wrapper">
             <div>
-                <h1>{{ customer.name }}</h1>
-                {{ breadcrumb('Clients', customer.name) }}
+                <h1>{{ customer.nom }}</h1>
+                {{ breadcrumb('Clients', customer.nom) }}
             </div>
         </header>
         <section class="page-wrapper">
@@ -40,8 +40,8 @@
                 <h2>Danger</h2>
             </div>
             <div>
-                <button class="button button-destructive" id="delete-user">Supprimer {{ customer.name }}</button>
-                {{ modal_deletion('modal_deletion', customer.name, '/customer/delete?customerId=' ~ customer.id) }}
+                <button class="button button-destructive" id="delete-user">Supprimer {{ customer.nom }}</button>
+                {{ modal_deletion('modal_deletion', customer.nom, '/customer/delete?customerId=' ~ customer.id) }}
             </div>
         </section>
     </main>

@@ -49,8 +49,7 @@ class ProductsController extends AbstractController
 
             // Création de l'objet produit
             $product = ProduitFactory::create(...$_POST);
-            var_dump($product); exit();
-            $productInsertion = $this->productOrm->insert($product);
+            $productInsertion = $this->produitRepository->insert($product);
 
             // Résultat de l'opération
             if($productInsertion)

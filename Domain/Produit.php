@@ -1,6 +1,8 @@
 <?php
 
 namespace Domain;
+use Infra\Uuid;
+
 class Produit
 {
     protected string $id;
@@ -11,7 +13,7 @@ class Produit
 
     public function __construct(string $nom, int|float $prix, int $quantite, string $categorie, ?string $id = null)
     {
-        $this->id = $id;
+        $this->id = $id ?? Uuid::uuid4()->toString();
         $this->nom = $nom;
         $this->prix = gettype($prix) === 'integer' ? $prix : $prix * 100;
         $this->quantite = $quantite;
