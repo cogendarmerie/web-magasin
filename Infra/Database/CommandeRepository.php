@@ -6,67 +6,92 @@ use Domain\Commande;
 use Infra\DatabaseInterface;
 use Infra\DatabaseRepository;
 use Domain\Client;
+use Infra\Factory\ProduitFactory;
 
 class CommandeRepository extends DatabaseRepository implements DatabaseInterface
 {
+    protected string $table = 'commande';
 
-    public function findAll()
+    public function findAll(): array
     {
-        // TODO: Implement findAll() method.
+        $sql = "SELECT commande.*, client.nom AS client_nom, client.email AS client_email FROM $this->table LEFT JOIN client ON commande.client_id = client.id ORDER BY commande.commande_date DESC";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        $data = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $commandes = array();
+
+        foreach ($data as $commande)
+        {
+            $client = new Client(
+                nom: $commande['client_email'],
+                email: $commande['client_email'],
+                id: $commande['client_id']
+            );
+
+            $commandes[] = new Commande(
+                id: $commande['id'],
+                client: $client,
+                dateCommande: new \DateTime($commande['commande_date'])
+            );
+        }
+
+        return $commandes;
     }
 
     public function findOneById(string $id)
     {
-        $sql = "SELECT * FROM commande WHERE id = :id";
+        $sql = "SELECT * FROM $this->table WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([
             "id" => $id
         ]);
         $data = $stmt->fetch();
-        $order = new Commande(
+        $commande = new Commande(
             id: $data['id'],
-            customer: (new ClientRepository())->findOneById($data['customer_id']),
-            dateCommande: new \DateTime($data['date_commande'])
+            client: (new ClientRepository())->findOneById($data['client_id']),
+            dateCommande: new \DateTime($data['commande_date'])
         );
 
         // Récupérer les articles
-        $sql = "SELECT commande_produit.quantity, produit.id, produit.name, produit.price, produit.category, produit.date_expiration, produit.guarantee, produit.size FROM commande_produit LEFT JOIN produit ON commande_produit.produit_id = produit.id WHERE commande_id = :id";
+        $sql = "SELECT commande_produit.quantite, produit.id, produit.nom, produit.prix, produit.categorie, produit.date_expiration, produit.guarantie, produit.taille FROM commande_produit LEFT JOIN produit ON commande_produit.produit_id = produit.id WHERE commande_id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([
             "id" => $id
         ]);
-        $data = $stmt->fetchAll();
-        $classBase = "\\Domain\\Produit\\";
+        $data = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         foreach ($data as $item)
         {
-            $class = $classBase . $item['categorie'];
-            $reflexionClass = new \ReflectionClass($class);
-            $constructorParams = $reflexionClass->getConstructor()->getParameters();
-
-            $params = array();
-            foreach ($constructorParams as $param)
-            {
-                $paramName = $param->getName();
-                if(isset($item[$paramName]))
-                {
-                    array_push($params, $item[$paramName]);
-                }
-            }
-
-            var_dump($item);
-            exit();
-
-            $product = new $class(...$params);
-            var_dump($product);
-            exit();
+            // Créer le produit et l'ajouter à la commande
+            $product = ProduitFactory::create(...$item);
+            $commande->addProduct($product);
         }
 
-        return $order;
+        return $commande;
     }
 
     public function update(string $id, object $object)
     {
-        // TODO: Implement update() method.
+        if (!$object instanceof Commande)
+        {
+            throw new \InvalidArgumentException("Vous devez fournir une instance de commande.");
+        }
+
+        // Supprimer les produits
+        $sql = "DELETE FROM commande_produit WHERE commande_id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(":id", $id);
+        $stmt->execute();
+
+        // Ajouter les produits
+        foreach ($object->getProducts() as $produit)
+        {
+            $sql = "INSERT INTO commande_produit (commande_id, produit_id, quantite) VALUES (:id, :produit_id, :quantite)";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindValue(":id", $id);
+            $stmt->bindValue(":produit_id", $produit->getId());
+            $stmt->bindValue(":quantite", $produit->getQuantite());
+            $stmt->execute();
+        }
     }
 
     public function insert(object $object)
@@ -86,7 +111,7 @@ class CommandeRepository extends DatabaseRepository implements DatabaseInterface
      */
     public function getCustomerOrders(Client $customer): array
     {
-        $sql = "SELECT * FROM commande WHERE client_id = :id";
+        $sql = "SELECT * FROM $this->table WHERE client_id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(":id", $customer->getId());
         $stmt->execute();

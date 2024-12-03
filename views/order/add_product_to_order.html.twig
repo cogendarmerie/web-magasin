@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+{% block title %}Ajouter un produit dans une commande{% endblock %}
+{% from 'macros/form.html.twig' import submit %}
+
+{% block body %}
+    <main>
+        <header class="page-wrapper">
+            <div>
+                <h1>Ajouter un produit</h1>
+            </div>
+        </header>
+        <section class="page-wrapper">
+            <div>
+                <h2>Choix du produit</h2>
+            </div>
+            <div>
+                <form action="" method="POST">
+                    <div class="form-control-wrapper">
+                        <label for="produit">Produit</label>
+                        <select name="produit" id="produit">
+                            {% for produit in produits %}
+                                <option value="{{ produit.id }}">{{ produit.nom }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    {{ submit("Ajouter") }}
+                </form>
+            </div>
+        </section>
+    </main>
+{% endblock %}

@@ -32,6 +32,11 @@ class ProduitFactory
 
         switch ($categorie) {
             case 'Alimentaire':
+                if (is_null($date_expiration))
+                {
+                    throw new InvalidArgumentException("La date expiration n'est pas valide.");
+                }
+
                 return new Alimentaire(
                     nom: $nom,
                     prix: $prix,
@@ -40,7 +45,13 @@ class ProduitFactory
                     dateExpiration: $date_expiration instanceof DateTime ? $date_expiration : new DateTime($date_expiration),
                     id: $id
                 );
+
             case 'Electromenager':
+                if (is_null($guarantie))
+                {
+                    throw new InvalidArgumentException("La date de guarantie est requise.");
+                }
+
                 return new Electromenager(
                     nom: $nom,
                     prix: $prix,

@@ -90,7 +90,8 @@ class ProductsController extends AbstractController
         // Récupérer l'id du produit dans l'URL
         $productId = $_GET['productId'];
 
-        $deletion = $this->productOrm->delete($productId);
+        // Supprimer le produit dans la BDD
+        $deletion = $this->produitRepository->delete($productId);
 
         if($deletion)
         {

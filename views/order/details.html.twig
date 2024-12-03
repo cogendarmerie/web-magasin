@@ -7,10 +7,37 @@
         <div>
             <h1>Détails d'une commande</h1>
         </div>
+        <div>
+            <p>Date de la commande : {{ order.date_commande | date("d/m/Y") }}</p>
+        </div>
     </header>
     <section class="page-wrapper">
         <div>
+            <h2>Client</h2>
+        </div>
+        <div>
+            <p>Nom : {{ order.client.nom }}</p>
+            <p>Email : {{ order.client.email }}</p>
+        </div>
+    </section>
+    <section class="page-wrapper">
+        <div>
             <h2>Contenu de la commande</h2>
+        </div>
+        <div>
+            <ul>
+                {% for produit in order.products %}
+                    <li>
+                        <p>
+                            <b>{{ produit.nom }}</b>
+                        </p>
+                        <p>{{ produit.quantite }} pièces</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div>
+            <a href="/orders/add-product/{{ order.id }}" class="button button-ghost">Ajouter un produit</a>
         </div>
     </section>
 </main>

@@ -7,18 +7,18 @@ use Infra\Uuid;
 class Commande
 {
     protected string $id;
-    protected Client $customer;
+    protected Client $client;
     protected \DateTime $dateCommande;
     protected array $products = array();
 
     public function __construct(
         ?string    $id = null,
-        ?Client    $customer = null,
+        ?Client    $client = null,
         ?\DateTime $dateCommande = null,
     )
     {
         $this->id = $id ?? Uuid::uuid4()->toString();
-        $this->customer = $customer;
+        $this->client = $client;
         $this->dateCommande = $dateCommande ?? new \DateTime();
     }
 
@@ -35,9 +35,9 @@ class Commande
      * Retourne le client
      * @return Client
      */
-    public function getCustomer(): Client
+    public function getClient(): Client
     {
-        return $this->customer;
+        return $this->client;
     }
 
     public function getDateCommande(): \DateTime
@@ -47,28 +47,31 @@ class Commande
 
     /**
      * Ajoute un produit à la commande
-     * @param Product $product
+     * @param Produit $produit
      * @return $this
      */
-    public function addProduct(Product $product): Commande
+    public function addProduct(Produit $produit): Commande
     {
-        if(method_exists($product, "isPerimee"))
+        if(method_exists($produit, "isPerimee"))
         {
             // Checker la date de péremption
-            if ($product->isPerimee())
+            if ($produit->isPerimee())
             {
                 throw new \Exception("Impossible d'ajouter ce produit, car il est périmée.");
             }
         }
 
         // Vérifier le stock du produit
-        if(!$product->isAvailable())
+        if(!$produit->isAvailable())
         {
             throw new \Exception("Le produit n'est pas disponible.");
         }
 
-        $this->products[] = $product;
-        $product->sortieStock(1);
+        // Ajouter le produit
+        $this->products[] = $produit;
+
+//        $produit->sortieStock(1);
+
         return $this;
     }
 

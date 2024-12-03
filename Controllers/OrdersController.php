@@ -5,6 +5,7 @@ namespace Controllers;
 use Domain\Commande;
 use Domain\Product\Alimentaire;
 use Infra\Database\CommandeRepository;
+use Infra\Database\ProduitRepository;
 use Infra\Orm\CustomerOrm;
 use Infra\Orm\OrderOrm;
 use Infra\Orm\ProductOrm;
@@ -15,6 +16,7 @@ class OrdersController extends AbstractController
     protected CustomerOrm $customerOrm;
     protected ProductOrm $productOrm;
     protected CommandeRepository $ordersRepository;
+    protected ProduitRepository $produitRepository;
 
     public function __construct()
     {
@@ -23,12 +25,12 @@ class OrdersController extends AbstractController
         $this->customerOrm = new CustomerOrm();
         $this->productOrm = new ProductOrm();
         $this->ordersRepository = new CommandeRepository();
+        $this->produitRepository = new ProduitRepository();
     }
 
     public function index(): void
     {
-        $orders = $this->orm->getAll();
-        var_dump(...$orders); exit();
+        $orders = $this->ordersRepository->findAll();
         $this->display('order/index.html.twig', [
             'orders' => $orders
         ]);
@@ -61,7 +63,7 @@ class OrdersController extends AbstractController
 
         // Créer la commande
         $commande = new Commande(
-            customer: $customer
+            client: $customer
         );
 
         // Ajouter les articles
@@ -70,5 +72,28 @@ class OrdersController extends AbstractController
 
         // Enregistrer la commande
         $this->orm->save($commande);
+    }
+
+    public function addProductToOrder(string $orderId): void
+    {
+        $commande = $this->ordersRepository->findOneById($orderId);
+        $produits = $this->produitRepository->findAll();
+
+        if($_SERVER['REQUEST_METHOD'] === "POST")
+        {
+            if (!isset($_POST['produit']))
+            {
+                throw new \Exception("Veuillez fournir l'id du produit");
+            }
+
+            $produit = $this->produitRepository->findOneById($_POST['produit']);
+            $commande->addProduct($produit);
+
+            $this->ordersRepository->update($commande->getId(), $commande);
+        }
+
+        $this->display('order/add_product_to_order.html.twig', [
+            'produits' => $produits
+        ]);
     }
 }

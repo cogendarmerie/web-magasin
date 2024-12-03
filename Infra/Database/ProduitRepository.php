@@ -10,10 +10,11 @@ use PDO;
 
 class ProduitRepository extends DatabaseRepository implements DatabaseInterface
 {
+    protected string $tableName = 'produit';
 
     public function findAll(): array
     {
-        $sql = "SELECT * FROM produit";
+        $sql = "SELECT * FROM $this->tableName";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -30,7 +31,7 @@ class ProduitRepository extends DatabaseRepository implements DatabaseInterface
 
     public function findOneById(string $id): Produit
     {
-        $sql = "SELECT * FROM produits WHERE id = ?";
+        $sql = "SELECT * FROM $this->tableName WHERE id = ?";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([$id]);
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -40,7 +41,7 @@ class ProduitRepository extends DatabaseRepository implements DatabaseInterface
 
     public function update(string $id, object $object): bool
     {
-        $sql = "UPDATE produits SET
+        $sql = "UPDATE $this->tableName SET
                 nom = :nom,
                 prix = :prix,
                 quantite = :quantite,
@@ -65,24 +66,27 @@ class ProduitRepository extends DatabaseRepository implements DatabaseInterface
 
     public function insert(object $object): bool
     {
-        $sql = "INSERT INTO produits (id, nom, prix, quantite, categorie, taille, guarantie, date_expiration)
+        $sql = "INSERT INTO $this->tableName (id, nom, prix, quantite, categorie, taille, guarantie, date_expiration)
                 VALUES (:id, :nom, :prix, :quantite, :categorie, :taille, :guarantie, :date_expiration)";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':id', $object->getId());
         $stmt->bindValue(':nom', $object->getNom());
-        $stmt->bindValue(':prix', $object->getPrix());
+        $stmt->bindValue(':prix', $object->getPrixInt());
         $stmt->bindValue(':quantite', $object->getQuantite());
         $stmt->bindValue(':categorie', $object->getCategorie());
-        $stmt->bindValue(':taille', $object->getTaille() ?? null);
-        $stmt->bindValue(':guarantie', $object->getGuarantie() ? $object->getGuarantie()->format('Y-m-d') : null);
-        $stmt->bindValue(':date_expiration', $object->getDateExpiration() ? $object->getDateExpiration()->format('Y-m-d') : null);
+        $stmt->bindValue(':taille', method_exists(get_class($object), "getTaille") ? $object->getTaille() : null);
+        $stmt->bindValue(':guarantie', method_exists(get_class($object), "getGuarantee") ? $object->getGuarantie()->format('Y-m-d') : null);
+        $stmt->bindValue(':date_expiration', method_exists(get_class($object), "getDateExpiration") ? $object->getDateExpiration()->format('Y-m-d') : null);
 
         return $stmt->execute();
     }
 
-    public function delete(string $id)
+    public function delete(string $id): bool
     {
-        // TODO: Implement delete() method.
+        $sql = "DELETE FROM $this->tableName WHERE id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':id', $id);
+        return $stmt->execute();
     }
 }

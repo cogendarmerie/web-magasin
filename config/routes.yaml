@@ -46,3 +46,6 @@ routes:
   orders_details:
     path: /orders/details/{orderId}
     controller: OrdersController@details
+  orders_add_product:
+    path: /orders/add-product/{orderId}
+    controller: OrdersController@addProductToOrder

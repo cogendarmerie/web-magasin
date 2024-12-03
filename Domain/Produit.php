@@ -35,6 +35,11 @@ class Produit
         return $this->prix / 100;
     }
 
+    public function getPrixInt(): int
+    {
+        return $this->prix;
+    }
+
     public function getQuantite(): int
     {
         return $this->quantite;
