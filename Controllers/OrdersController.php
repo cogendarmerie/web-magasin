@@ -94,7 +94,7 @@ class OrdersController extends AbstractController
     public function addProductToOrder(string $orderId): void
     {
         $commande = $this->ordersRepository->findOneById($orderId);
-        $produits = $this->produitRepository->findAll();
+        $produits = $this->produitRepository->findAllNotContainedInOrder($commande);
 
         if($_SERVER['REQUEST_METHOD'] === "POST")
         {

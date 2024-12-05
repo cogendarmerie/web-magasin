@@ -2,6 +2,7 @@
 
 namespace Infra\Database;
 
+use Domain\Commande;
 use Domain\Produit;
 use Infra\DatabaseInterface;
 use Infra\DatabaseRepository;
@@ -25,7 +26,36 @@ class ProduitRepository extends DatabaseRepository implements DatabaseInterface
             $produit = ProduitFactory::create(...$item);
             array_push($produits, $produit);
         }
+        return $produits;
+    }
 
+    /**
+     * Retourne tous les produits contenu dans la base qui ne sont pas déjà ajoutée a une commande
+     * @param Commande $commande
+     * @return array
+     * @throws \DateMalformedStringException
+     */
+    public function findAllNotContainedInOrder(Commande $commande): array
+    {
+        $sql = "
+            SELECT p.id, p.nom, p.prix, p.quantite, p.date_expiration, p.guarantie, p.taille, p.categorie 
+            FROM produit p 
+            WHERE p.id NOT IN (
+                SELECT cp.produit_id 
+                FROM commande_produit cp 
+                WHERE cp.commande_id = :id
+            )
+            AND p.deleted_at IS NULL
+        ";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['id' => $commande->getId()]);
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $produits = array();
+        foreach ($data as $item)
+        {
+            $produit = ProduitFactory::create(...$item);
+            array_push($produits, $produit);
+        }
         return $produits;
     }
 
