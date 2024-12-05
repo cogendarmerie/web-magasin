@@ -2,7 +2,7 @@
     <div class="order-card">
         <div>
             <p>Date {{ order.date | date('d/m/Y') }}</p>
-            <p>{{ order.customer.name }}</p>
+            <p>{{ order.client.nom }}</p>
         </div>
         <div>
             <a href="/orders/details/{{ order.id }}" class="button button-ghost">Consulter</a>

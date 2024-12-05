@@ -23,7 +23,7 @@ class CommandeRepository extends DatabaseRepository implements DatabaseInterface
         foreach ($data as $commande)
         {
             $client = new Client(
-                nom: $commande['client_email'],
+                nom: $commande['client_nom'],
                 email: $commande['client_email'],
                 id: $commande['client_id']
             );

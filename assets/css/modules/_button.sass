@@ -5,12 +5,12 @@
   flex-direction: row
   align-items: center
   justify-content: center
-  padding: .8rem 2rem
+  padding: .7rem 2rem
   text-transform: none
   text-decoration: none
-  font-size: 16px
+  font-size: 14px
   line-height: 16px
-  border-radius: 0
+  border-radius: .25rem
   transition: all .25s ease
   border: 1px solid v.$color-blue
   font-weight: 600
@@ -25,12 +25,14 @@
     color: v.$color-blue
 
 .button-destructive
-  background-color: v.$color-orange
-  color: v.$color-blue
-  border-color: v.$color-orange
+  background-color: var(--Orange)
+  color: var(--White)
+  border-color: var(--Orange)
 
   &:hover
-    background-color: darken(v.$color-orange, 10%)
+    background-color: var(--Pale-orange)
+    color: var(--Orange)
+    border-color: var(--Pale-orange)
 
 .button-ghost
   background-color: rgba(v.$color-blue, .025)

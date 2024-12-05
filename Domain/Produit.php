@@ -58,4 +58,15 @@ class Produit
     {
         return $this->quantite > 0;
     }
+
+    /**
+     * Sortir un nombre de produit
+     * @param int $quantite
+     * @return int
+     */
+    public function sortieStock(int $quantite = 1): int
+    {
+        $this->quantite = $this->quantite - $quantite;
+        return $this->quantite;
+    }
 }

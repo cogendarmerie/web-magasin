@@ -69,4 +69,14 @@ class Client
     {
         return get_object_vars($this);
     }
+
+    /**
+     * Offusquer les données du client conformément au RGPD
+     * @return void
+     */
+    public function offusquer()
+    {
+        $this->nom = "****";
+        $this->email = "****@****.**";
+    }
 }
