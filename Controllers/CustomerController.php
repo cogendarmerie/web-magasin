@@ -14,12 +14,10 @@ class CustomerController extends AbstractController
 {
     protected ClientRepository $repository;
     protected CommandeRepository $ordersRepository;
-    protected CustomerOrm $orm;
 
     public function __construct()
     {
         parent::__construct();
-        $this->orm = new CustomerOrm();
         $this->repository = new ClientRepository();
         $this->ordersRepository = new CommandeRepository();
     }

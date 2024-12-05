@@ -99,13 +99,22 @@ class Commande
         return $this->products;
     }
 
-    public function getTotalPrice(): int
+    public function getTotalPrice(): float
     {
         $total = 0;
         foreach($this->products as $product)
         {
-            $total += $product->getPrice();
+            $total += $product->getPrix();
         }
-        return $total;
+        return round($total, 2);
+    }
+
+    /**
+     * Retourne le nombre d'article contenu dans la commande
+     * @return int
+     */
+    public function getNumberOfProducts(): int
+    {
+        return count($this->products);
     }
 }

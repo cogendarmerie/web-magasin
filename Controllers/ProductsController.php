@@ -5,16 +5,13 @@ use Domain\Product\Alimentaire;
 use Domain\Product\ProductFactory;
 use Infra\Database\ProduitRepository;
 use Infra\Factory\ProduitFactory;
-use Infra\Orm\ProductOrm;
 
 class ProductsController extends AbstractController
 {
-    protected ProductOrm $productOrm;
     protected ProduitRepository $produitRepository;
 
     public function __construct()
     {
-        $this->productOrm = new ProductOrm();
         $this->produitRepository = new ProduitRepository();
         parent::__construct();
     }

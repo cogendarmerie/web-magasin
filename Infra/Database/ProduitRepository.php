@@ -106,7 +106,7 @@ class ProduitRepository extends DatabaseRepository implements DatabaseInterface
         $stmt->bindValue(':quantite', $object->getQuantite());
         $stmt->bindValue(':categorie', $object->getCategorie());
         $stmt->bindValue(':taille', method_exists(get_class($object), "getTaille") ? $object->getTaille() : null);
-        $stmt->bindValue(':guarantie', method_exists(get_class($object), "getGuarantee") ? $object->getGuarantie()->format('Y-m-d') : null);
+        $stmt->bindValue(':guarantie', method_exists(get_class($object), "getGuarantie") ? $object->getGuarantie()->format('Y-m-d') : null);
         $stmt->bindValue(':date_expiration', method_exists(get_class($object), "getDateExpiration") ? $object->getDateExpiration()->format('Y-m-d') : null);
 
         return $stmt->execute();

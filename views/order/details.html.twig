@@ -22,6 +22,15 @@
     </section>
     <section class="page-wrapper">
         <div>
+            <h2>Information générale</h2>
+        </div>
+        <div>
+            <p>Total : {{ order.totalPrice }} €</p>
+            <p>{{ order.numberOfProducts }} articles</p>
+        </div>
+    </section>
+    <section class="page-wrapper">
+        <div>
             <h2>Contenu de la commande</h2>
         </div>
         <div>
@@ -32,6 +41,7 @@
                             <b>{{ produit.nom }}</b>
                         </p>
                         <p>{{ produit.quantite }} pièces</p>
+                        <p>{{ produit.prix }} €</p>
                     </li>
                 {% endfor %}
             </ul>
