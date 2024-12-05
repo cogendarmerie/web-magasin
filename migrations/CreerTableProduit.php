@@ -15,7 +15,7 @@ class CreerTableProduit extends Migration
             date_expiration DATETIME NULL,
             guarantie DATETIME NULL,
             taille VARCHAR(50) NULl,
-            deleted_at TIMESTAMP DEFAULT NULL,
+            deleted_at TIMESTAMP DEFAULT NULL
         )";
         $this->pdo->exec($sql);
     }

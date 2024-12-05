@@ -17,6 +17,8 @@ Créer les containers docker, créer les tables dans la base de données et comp
 
 ```shell
 make build
+make migrate
+make open
 ```
 
 #### Lancer les containers (Déjà compiler)

@@ -1,6 +1,6 @@
 docker-compose ?= $(shell which docker) compose -f docker-compose.yml
-docker-exec ?= $(shell which docker) exec -it
-sass ?= $(docker-exec) mag_sass /bin/sh -c "sass ./assets/css/main.sass ./public/assets/css/main.css --no-source-map --style=compressed"
+docker-exec ?= $(docker-compose) exec -it
+sass ?= $(docker-exec) sass /bin/sh -c "sass ./assets/css/main.sass ./public/assets/css/main.css --no-source-map --style=compressed"
 
 open-website ?= open http://localhost:8080
 
@@ -11,9 +11,13 @@ build:
 	$(docker-compose) up --build -d
 	# Compiler les fichiers CSS
 	$(sass)
-	# Créer les tables dans la BDD
-	$(docker-exec) mag_php /bin/bash -c "composer install && php migrate.php"
-	$(open-website)
+	# Installer composer
+	$(docker-exec) php /bin/bash -c "composer install"
+
+# Migrer la base de donnée
+.PHONY: migrate
+migrate:
+	$(docker-exec) php /bin/bash -c "php migrate.php"
 
 # Lancer les containers et compiler les fichiers CSS
 .PHONY: run
@@ -35,11 +39,11 @@ dev:
 # Se connecter au container en shell
 .PHONY: php
 php:
-	$(docker-exec) mag_php /bin/bash
+	$(docker-exec) php /bin/bash
 
 .PHONY: sass
 sass:
-	$(docker-exec) mag_sass /bin/sh
+	$(docker-exec) sass /bin/sh
 
 # Ouvrir le site internet dans le naviguateur web par défault
 .PHONY: open
@@ -48,4 +52,4 @@ open:
 
 .PHONY: test
 test:
-	$(docker-exec) mag_php /bin/bash -c "php vendor/bin/phpunit --bootstrap tests/AlimentaireTest.php"
+	$(docker-exec) php /bin/bash -c "php vendor/bin/phpunit --bootstrap tests/AlimentaireTest.php"
