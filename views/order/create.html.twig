@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+{% block title %}Nouvelle commande{% endblock %}
+{% from 'macros/form.html.twig' import submit, input %}
+
+{% block body %}
+    <main>
+        <header class="page-wrapper">
+            <div>
+                <h1>Ajout d'une commande</h1>
+            </div>
+        </header>
+        <section class="page-wrapper">
+            <div>
+                <form action="" method="POST">
+                    <div class="form-control-wrapper">
+                        <label for="client">Client</label>
+                        <select name="client" id="client" required>
+                            <option value="">-- Veuillez sélectionner un client --</option>
+                            {% for client in clients %}
+                                <option value="{{ client.id }}">{{ client.nom }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    {{ input('date', 'date', 'Date de la commande', null, 'date') }}
+                    {{ submit('Ajouter') }}
+                </form>
+            </div>
+        </section>
+    </main>
+{% endblock %}

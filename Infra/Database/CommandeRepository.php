@@ -94,26 +94,39 @@ class CommandeRepository extends DatabaseRepository implements DatabaseInterface
         }
     }
 
-    public function insert(object $object)
+    public function insert(object $object): bool
     {
-        // TODO: Implement insert() method.
+        if(!$object instanceof Commande)
+        {
+            throw new \InvalidArgumentException("Vous devez fournir une instance de commande.");
+        }
+
+        $sql = "INSERT INTO commande (id, client_id, commande_date) VALUES (:id, :client_id, :commande_date)";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(":id", $object->getId());
+        $stmt->bindValue(":client_id", $object->getClient()->getId());
+        $stmt->bindValue(":commande_date", $object->getDateCommande()->format('Y-m-d'));
+        return $stmt->execute();
     }
 
-    public function delete(string $id)
+    public function delete(string $id): bool
     {
-        // TODO: Implement delete() method.
+        $sql = "DELETE FROM commande WHERE id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(":id", $id);
+        return $stmt->execute();
     }
 
     /**
      * Retourne un tableau contenant les commandes effectuées par un client
-     * @param Client $customer
+     * @param Client $client
      * @return array
      */
-    public function getCustomerOrders(Client $customer): array
+    public function getCustomerOrders(Client $client): array
     {
         $sql = "SELECT * FROM $this->table WHERE client_id = :id";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(":id", $customer->getId());
+        $stmt->bindValue(":id", $client->getId());
         $stmt->execute();
         $data = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         $orders = array();
@@ -121,7 +134,7 @@ class CommandeRepository extends DatabaseRepository implements DatabaseInterface
         {
             $orders[] = new Commande(
                 id: $order['id'],
-                customer: $customer,
+                client: $client,
                 dateCommande: new \DateTime($order['commande_date'])
             );
         }

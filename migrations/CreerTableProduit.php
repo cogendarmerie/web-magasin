@@ -14,7 +14,8 @@ class CreerTableProduit extends Migration
             categorie ENUM('Alimentaire', 'Electromenager', 'Textile') NOT NULL,
             date_expiration DATETIME NULL,
             guarantie DATETIME NULL,
-            taille VARCHAR(50) NULl
+            taille VARCHAR(50) NULl,
+            deleted_at TIMESTAMP DEFAULT NULL,
         )";
         $this->pdo->exec($sql);
     }

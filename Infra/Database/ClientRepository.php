@@ -16,7 +16,7 @@ class ClientRepository extends DatabaseRepository implements DatabaseInterface
      */
     public function findAll(): array
     {
-        $sql = "SELECT * FROM client";
+        $sql = "SELECT id, nom, email FROM client WHERE deleted_at IS NULL";
         $stmt = $this->pdo->query($sql);
         $data = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         $customers = array();
@@ -38,7 +38,7 @@ class ClientRepository extends DatabaseRepository implements DatabaseInterface
      */
     public function findOneById(string $id): ?Client
     {
-        $sql = "SELECT * FROM client WHERE id = :id";
+        $sql = "SELECT id, nom, email FROM client WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(":id", $id);
         $stmt->execute();
@@ -93,7 +93,7 @@ class ClientRepository extends DatabaseRepository implements DatabaseInterface
 
     public function delete(string $id): bool
     {
-        $sql = "DELETE FROM client WHERE id = :id";
+        $sql = "UPDATE client SET deleted_at = NOW() WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(":id", $id);
         return $stmt->execute();

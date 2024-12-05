@@ -14,7 +14,7 @@ class ProduitRepository extends DatabaseRepository implements DatabaseInterface
 
     public function findAll(): array
     {
-        $sql = "SELECT * FROM $this->tableName";
+        $sql = "SELECT id, nom, prix, quantite, categorie, date_expiration, guarantie, taille FROM $this->tableName WHERE deleted_at IS NULL";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -31,7 +31,7 @@ class ProduitRepository extends DatabaseRepository implements DatabaseInterface
 
     public function findOneById(string $id): Produit
     {
-        $sql = "SELECT * FROM $this->tableName WHERE id = ?";
+        $sql = "SELECT id, nom, prix, quantite, categorie, date_expiration, guarantie, taille FROM $this->tableName WHERE id = ?";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([$id]);
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -84,7 +84,7 @@ class ProduitRepository extends DatabaseRepository implements DatabaseInterface
 
     public function delete(string $id): bool
     {
-        $sql = "DELETE FROM $this->tableName WHERE id = :id";
+        $sql = "UPDATE produit SET deleted_at = NOW() WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':id', $id);
         return $stmt->execute();
