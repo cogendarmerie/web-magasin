@@ -3,7 +3,7 @@
 namespace Tests;
 
 use PHPUnit\Framework\TestCase;
-use Domain\Product\Alimentaire;
+use Domain\Produit\Alimentaire;
 
 class AlimentaireTest extends TestCase
 {
@@ -18,8 +18,8 @@ class AlimentaireTest extends TestCase
         $fraise = new Alimentaire(
             nom: "Fraise",
             prix: 10.50,
-            dateExpiration: $futureDate,
-            quantite: 10
+            quantite: 10,
+            dateExpiration: $futureDate
         );
 
         // Vérification de la méthode isPerimee
@@ -37,8 +37,8 @@ class AlimentaireTest extends TestCase
         $macaron = new Alimentaire(
             nom: "Macaron",
             prix: 10.00,
-            dateExpiration: $pastDate,
-            quantite: 10
+            quantite: 10,
+            dateExpiration: $pastDate
         );
 
         // Vérification de la méthode isPerimee
