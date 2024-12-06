@@ -8,9 +8,15 @@ class Alimentaire extends Produit
 {
     protected \DateTime $dateExpiration;
 
-    public function __construct( string $nom, float|int $prix, int $quantite, string $categorie, \DateTime $dateExpiration, ?string $id)
+    public function __construct( string $nom, float|int $prix, int $quantite, \DateTime $dateExpiration, ?string $id = null)
     {
-        parent::__construct($nom, $prix, $quantite, $categorie, $id);
+        parent::__construct(
+            nom: $nom,
+            prix: $prix,
+            quantite: $quantite,
+            categorie: "Alimentaire",
+            id: $id
+        );
         $this->dateExpiration = $dateExpiration;
     }
 

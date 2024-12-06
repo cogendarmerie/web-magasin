@@ -8,9 +8,15 @@ class Textile extends Produit
 {
     protected string $taille;
 
-    public function __construct(string $nom, float|int $prix, int $quantite, string $categorie, string $taille, ?string $id = null)
+    public function __construct(string $nom, float|int $prix, int $quantite, string $taille, ?string $id = null)
     {
-        parent::__construct($id, $nom, $prix, $quantite, $categorie);
+        parent::__construct(
+            nom: $nom,
+            prix: $prix,
+            quantite: $quantite,
+            categorie: "Textile",
+            id: $id
+        );
         $this->taille = $taille;
     }
 

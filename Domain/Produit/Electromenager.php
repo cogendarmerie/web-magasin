@@ -9,13 +9,13 @@ class Electromenager extends Produit
 {
     protected DateTime $guarantie;
 
-    public function __construct(string $nom, float|int $prix, int $quantite, string $categorie, DateTime $guarantie, ?string $id = null)
+    public function __construct(string $nom, float|int $prix, int $quantite, DateTime $guarantie, ?string $id = null)
     {
         parent::__construct(
             nom: $nom,
             prix: $prix,
             quantite: $quantite,
-            categorie: $categorie,
+            categorie: "Electromenager",
             id: $id
         );
         $this->guarantie = $guarantie;
